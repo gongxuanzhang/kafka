@@ -190,6 +190,12 @@
                             <code>DEAD</code> if the group ID was not found. In Apache Kafka 4.0, the <code>GroupIdNotFoundException</code>
                             is thrown instead as part of the support for new types of group.
                         </li>
+                        <li>The <code>org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerLoginCallbackHandler</code> class was removed.
+                            Please use the <code>org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler</code> class instead.
+                        </li>
+                        <li>The <code>org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerValidatorCallbackHandler</code> class was removed.
+                            Please use the <code>org.apache.kafka.common.security.oauthbearer.OAuthBearerValidatorCallbackHandler</code> class instead.
+                        </li>
                     </ul>
                 </li>
             </ul>
