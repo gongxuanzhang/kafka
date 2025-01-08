@@ -52,37 +52,6 @@ trait ControllerNodeProvider {
   def getControllerInfo(): ControllerInformation
 }
 
-class MetadataCacheControllerNodeProvider(
-  val metadataCache: ZkMetadataCache,
-  val config: KafkaConfig,
-  val quorumControllerNodeProvider: () => Option[ControllerInformation]
-) extends ControllerNodeProvider {
-
-  private val zkControllerListenerName = config.controlPlaneListenerName.getOrElse(config.interBrokerListenerName)
-  private val zkControllerSecurityProtocol = config.controlPlaneSecurityProtocol.getOrElse(config.interBrokerSecurityProtocol)
-  private val zkControllerSaslMechanism = config.saslMechanismInterBrokerProtocol
-
-  val emptyZkControllerInfo =  ControllerInformation(
-    None,
-    zkControllerListenerName,
-    zkControllerSecurityProtocol,
-    zkControllerSaslMechanism,
-    isZkController = true)
-
-  override def getControllerInfo(): ControllerInformation = {
-    metadataCache.getControllerId.map {
-      case ZkCachedControllerId(id) => ControllerInformation(
-        metadataCache.getAliveBrokerNode(id, zkControllerListenerName),
-        zkControllerListenerName,
-        zkControllerSecurityProtocol,
-        zkControllerSaslMechanism,
-        isZkController = true)
-      case KRaftCachedControllerId(_) =>
-        quorumControllerNodeProvider.apply().getOrElse(emptyZkControllerInfo)
-    }.getOrElse(emptyZkControllerInfo)
-  }
-}
-
 object RaftControllerNodeProvider {
   def apply(
     raftManager: RaftManager[ApiMessageAndVersion],
