@@ -17,13 +17,9 @@
 
 package kafka.server
 
-import java.util.concurrent.LinkedBlockingDeque
-import java.util.concurrent.atomic.AtomicReference
 import kafka.raft.RaftManager
-import kafka.server.metadata.ZkMetadataCache
 import kafka.utils.Logging
 import org.apache.kafka.clients._
-import org.apache.kafka.common.{Node, Reconfigurable}
 import org.apache.kafka.common.metrics.Metrics
 import org.apache.kafka.common.network._
 import org.apache.kafka.common.protocol.Errors
@@ -31,11 +27,14 @@ import org.apache.kafka.common.requests.AbstractRequest
 import org.apache.kafka.common.security.JaasContext
 import org.apache.kafka.common.security.auth.SecurityProtocol
 import org.apache.kafka.common.utils.{LogContext, Time}
+import org.apache.kafka.common.{Node, Reconfigurable}
 import org.apache.kafka.server.common.{ApiMessageAndVersion, ControllerRequestCompletionHandler, NodeToControllerChannelManager}
 import org.apache.kafka.server.util.{InterBrokerSendThread, RequestAndCompletionHandler}
 
 import java.util
 import java.util.Optional
+import java.util.concurrent.LinkedBlockingDeque
+import java.util.concurrent.atomic.AtomicReference
 import scala.collection.Seq
 import scala.jdk.CollectionConverters._
 import scala.jdk.OptionConverters.{RichOption, RichOptionalInt}
