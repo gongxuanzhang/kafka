@@ -43,8 +43,7 @@ case class ControllerInformation(
   node: Option[Node],
   listenerName: ListenerName,
   securityProtocol: SecurityProtocol,
-  saslMechanism: String,
-  isZkController: Boolean
+  saslMechanism: String
 )
 
 trait ControllerNodeProvider {
@@ -83,7 +82,7 @@ class RaftControllerNodeProvider(
 
   override def getControllerInfo(): ControllerInformation =
     ControllerInformation(raftManager.leaderAndEpoch.leaderId.toScala.flatMap(idToNode),
-      listenerName, securityProtocol, saslMechanism, isZkController = false)
+      listenerName, securityProtocol, saslMechanism)
 }
 
 /**
@@ -167,7 +166,6 @@ class NodeToControllerChannelManagerImpl(
     val controllerInformation = controllerNodeProvider.getControllerInfo()
     new NodeToControllerRequestThread(
       buildNetworkClient(controllerInformation),
-      controllerInformation.isZkController,
       buildNetworkClient,
       manualMetadataUpdater,
       controllerNodeProvider,
@@ -212,7 +210,6 @@ case class NodeToControllerQueueItem(
 
 class NodeToControllerRequestThread(
   initialNetworkClient: KafkaClient,
-  var isNetworkClientForZkController: Boolean,
   networkClientFactory: ControllerInformation => KafkaClient,
   metadataUpdater: ManualMetadataUpdater,
   controllerNodeProvider: ControllerNodeProvider,
@@ -229,22 +226,6 @@ class NodeToControllerRequestThread(
 ) with Logging {
 
   this.logIdent = logPrefix
-
-  private def maybeResetNetworkClient(controllerInformation: ControllerInformation): Unit = {
-    if (isNetworkClientForZkController != controllerInformation.isZkController) {
-      debug("Controller changed to " + (if (isNetworkClientForZkController) "kraft" else "zk") + " mode. " +
-        s"Resetting network client with new controller information : ${controllerInformation}")
-      // Close existing network client.
-      val oldClient = networkClient
-      oldClient.initiateClose()
-      oldClient.close()
-
-      isNetworkClientForZkController = controllerInformation.isZkController
-      updateControllerAddress(controllerInformation.node.orNull)
-      controllerInformation.node.foreach(n => metadataUpdater.setNodes(Seq(n).asJava))
-      networkClient = networkClientFactory(controllerInformation)
-    }
-  }
 
   private val requestQueue = new LinkedBlockingDeque[NodeToControllerQueueItem]()
   private val activeController = new AtomicReference[Node](null)
@@ -339,19 +320,13 @@ class NodeToControllerRequestThread(
 
   override def doWork(): Unit = {
     val controllerInformation = controllerNodeProvider.getControllerInfo()
-    maybeResetNetworkClient(controllerInformation)
     if (activeControllerAddress().isDefined) {
       super.pollOnce(Long.MaxValue)
     } else {
       debug("Controller isn't cached, looking for local metadata changes")
       controllerInformation.node match {
         case Some(controllerNode) =>
-          val controllerType = if (controllerInformation.isZkController) {
-            "ZK"
-          } else {
-            "KRaft"
-          }
-          info(s"Recorded new $controllerType controller, from now on will use node $controllerNode")
+          info(s"Recorded new KRaft controller, from now on will use node $controllerNode")
           updateControllerAddress(controllerNode)
           metadataUpdater.setNodes(Seq(controllerNode).asJava)
         case None =>
