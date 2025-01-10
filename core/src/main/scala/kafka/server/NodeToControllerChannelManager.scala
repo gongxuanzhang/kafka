@@ -166,7 +166,6 @@ class NodeToControllerChannelManagerImpl(
     val controllerInformation = controllerNodeProvider.getControllerInfo()
     new NodeToControllerRequestThread(
       buildNetworkClient(controllerInformation),
-      buildNetworkClient,
       manualMetadataUpdater,
       controllerNodeProvider,
       config,
@@ -210,7 +209,6 @@ case class NodeToControllerQueueItem(
 
 class NodeToControllerRequestThread(
   initialNetworkClient: KafkaClient,
-  networkClientFactory: ControllerInformation => KafkaClient,
   metadataUpdater: ManualMetadataUpdater,
   controllerNodeProvider: ControllerNodeProvider,
   config: KafkaConfig,
