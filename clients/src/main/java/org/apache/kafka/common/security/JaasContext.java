@@ -33,8 +33,9 @@ import java.util.stream.Collectors;
 import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 
+import static org.apache.kafka.common.security.JaasUtils.ALLOWED_LOGIN_MODULES_CONFIG;
+import static org.apache.kafka.common.security.JaasUtils.ALLOWED_LOGIN_MODULES_DEFAULT;
 import static org.apache.kafka.common.security.JaasUtils.DISALLOWED_LOGIN_MODULES_CONFIG;
-import static org.apache.kafka.common.security.JaasUtils.DISALLOWED_LOGIN_MODULES_DEFAULT;
 
 public class JaasContext {
 
@@ -103,15 +104,41 @@ public class JaasContext {
             return defaultContext(contextType, listenerContextName, globalContextName);
     }
 
+    @SuppressWarnings("deprecation")
     private static void throwIfLoginModuleIsNotAllowed(AppConfigurationEntry appConfigurationEntry) {
-        Set<String> disallowedLoginModuleList = Arrays.stream(
-                System.getProperty(DISALLOWED_LOGIN_MODULES_CONFIG, DISALLOWED_LOGIN_MODULES_DEFAULT).split(","))
+        String disallowedProperty = System.getProperty(DISALLOWED_LOGIN_MODULES_CONFIG);
+        if (disallowedProperty != null) {
+            LOG.warn("System property '{}' is deprecated and will be removed in a future release. Use '{}' instead.",
+                    DISALLOWED_LOGIN_MODULES_CONFIG, ALLOWED_LOGIN_MODULES_CONFIG);
+        }
+        String loginModuleName = appConfigurationEntry.getLoginModuleName().trim();
+        String allowedProperty = System.getProperty(ALLOWED_LOGIN_MODULES_CONFIG);
+        if (allowedProperty != null) {
+            Set<String> allowedLoginModuleList = Arrays.stream(allowedProperty.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toSet());
+            if (!allowedLoginModuleList.contains(loginModuleName)) {
+                throw new IllegalArgumentException(loginModuleName + " is not allowed. Update System property '"
+                        + ALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
+            }
+            return;
+        }
+        if (disallowedProperty != null) {
+            Set<String> disallowedLoginModuleList = Arrays.stream(disallowedProperty.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.toSet());
+            if (disallowedLoginModuleList.contains(loginModuleName)) {
+                throw new IllegalArgumentException(loginModuleName + " is not allowed. Update System property '"
+                        + DISALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
+            }
+            return;
+        }
+        Set<String> defaultAllowedLoginModuleList = Arrays.stream(ALLOWED_LOGIN_MODULES_DEFAULT.split(","))
                 .map(String::trim)
                 .collect(Collectors.toSet());
-        String loginModuleName = appConfigurationEntry.getLoginModuleName().trim();
-        if (disallowedLoginModuleList.contains(loginModuleName)) {
+        if (!defaultAllowedLoginModuleList.contains(loginModuleName)) {
             throw new IllegalArgumentException(loginModuleName + " is not allowed. Update System property '"
-                    + DISALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
+                    + ALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
         }
     }
 
