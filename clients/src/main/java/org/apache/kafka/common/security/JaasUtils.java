@@ -16,6 +16,8 @@
  */
 package org.apache.kafka.common.security;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class JaasUtils {
@@ -27,11 +29,19 @@ public final class JaasUtils {
             "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule",
             "org.apache.kafka.common.security.plain.PlainLoginModule",
             "org.apache.kafka.connect.rest.basic.auth.extension.PropertyFileLoginModule",
-            "org.apache.kafka.common.security.scram.ScramLoginModule"
+            "org.apache.kafka.common.security.scram.ScramLoginModule",
+            "com.sun.security.auth.module.Krb5LoginModule"
     ));
     public static final String SERVICE_NAME = "serviceName";
 
     private JaasUtils() {
+    }
+
+    public static void allowDefaultJaasAndCustomJass(String... customJaas) {
+        List<String> jaasModules = new ArrayList<>();
+        jaasModules.add(ALLOWED_LOGIN_MODULES_DEFAULT);
+        jaasModules.addAll(Arrays.asList(customJaas));
+        System.setProperty(org.apache.kafka.common.security.JaasUtils.ALLOWED_LOGIN_MODULES_CONFIG, String.join(",", jaasModules));
     }
 
 }

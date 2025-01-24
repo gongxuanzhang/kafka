@@ -66,6 +66,7 @@ import org.apache.kafka.common.requests.SaslAuthenticateRequest;
 import org.apache.kafka.common.requests.SaslHandshakeRequest;
 import org.apache.kafka.common.requests.SaslHandshakeResponse;
 import org.apache.kafka.common.security.JaasContext;
+import org.apache.kafka.common.security.JaasUtils;
 import org.apache.kafka.common.security.TestSecurityConfig;
 import org.apache.kafka.common.security.auth.AuthenticateCallbackHandler;
 import org.apache.kafka.common.security.auth.AuthenticationContext;
@@ -174,6 +175,8 @@ public class SaslAuthenticatorTest {
         saslClientConfigs = clientCertStores.getTrustingConfig(serverCertStores);
         credentialCache = new CredentialCache();
         TestLogin.loginCount.set(0);
+        JaasUtils.allowDefaultJaasAndCustomJass("org.apache.kafka.common.security.authenticator.TestDigestLoginModule",
+                "org.apache.kafka.common.security.authenticator.SaslAuthenticatorTest$TestPlainLoginModule");
     }
 
     @AfterEach
@@ -1053,12 +1056,7 @@ public class SaslAuthenticatorTest {
 
         SecurityProtocol securityProtocol = SecurityProtocol.SASL_SSL;
         server = createEchoServer(securityProtocol);
-        try {
-            createSelector(securityProtocol, saslClientConfigs);
-            fail("SASL/PLAIN channel created without valid login module");
-        } catch (KafkaException e) {
-            // Expected exception
-        }
+        assertThrows(IllegalArgumentException.class, () -> createSelector(securityProtocol, saslClientConfigs));
     }
 
     /**
