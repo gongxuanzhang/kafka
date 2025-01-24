@@ -33,6 +33,7 @@ import org.apache.kafka.common.errors.SaslAuthenticationException;
 import org.apache.kafka.common.network.ListenerName;
 import org.apache.kafka.common.network.NetworkTestUtils;
 import org.apache.kafka.common.network.NioEchoServer;
+import org.apache.kafka.common.security.JaasUtils;
 import org.apache.kafka.common.security.TestSecurityConfig;
 import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -75,6 +76,7 @@ public class ClientAuthenticationFailureTest {
         TestJaasConfig testJaasConfig = TestJaasConfig.createConfiguration("PLAIN", Collections.singletonList("PLAIN"));
         testJaasConfig.setClientOptions("PLAIN", TestJaasConfig.USERNAME, "anotherpassword");
         server = createEchoServer(securityProtocol);
+        JaasUtils.allowDefaultJaasAndCustomJass();
     }
 
     @AfterEach

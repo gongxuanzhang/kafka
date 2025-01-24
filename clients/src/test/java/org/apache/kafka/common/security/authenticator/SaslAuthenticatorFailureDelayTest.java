@@ -28,6 +28,7 @@ import org.apache.kafka.common.network.NetworkTestUtils;
 import org.apache.kafka.common.network.NioEchoServer;
 import org.apache.kafka.common.network.Selector;
 import org.apache.kafka.common.security.JaasContext;
+import org.apache.kafka.common.security.JaasUtils;
 import org.apache.kafka.common.security.TestSecurityConfig;
 import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.kafka.common.utils.LogContext;
@@ -74,6 +75,7 @@ public abstract class SaslAuthenticatorFailureDelayTest {
         credentialCache = new CredentialCache();
         SaslAuthenticatorTest.TestLogin.loginCount.set(0);
         startTimeMs = time.milliseconds();
+        JaasUtils.allowDefaultJaasAndCustomJass();
     }
 
     @AfterEach
