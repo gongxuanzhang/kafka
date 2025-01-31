@@ -60,7 +60,7 @@ public class LoginManagerTest {
                 " required user=\"digestuser\" password=\"digest-secret\";");
         TestJaasConfig.createConfiguration("SCRAM-SHA-256",
                 Collections.singletonList("SCRAM-SHA-256"));
-        JaasUtils.allowDefaultJaasAndCustomJass("org.apache.kafka.common.security.authenticator.TestDigestLoginModule");
+        JaasUtils.allowDefaultJaasAndCustomJaas("org.apache.kafka.common.security.authenticator.TestDigestLoginModule");
     }
 
     @AfterEach

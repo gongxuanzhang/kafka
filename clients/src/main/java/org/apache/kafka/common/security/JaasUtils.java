@@ -37,11 +37,11 @@ public final class JaasUtils {
     private JaasUtils() {
     }
 
-    public static void allowDefaultJaasAndCustomJass(String... customJaas) {
+    public static void allowDefaultJaasAndCustomJaas(String... customJaas) {
         List<String> jaasModules = new ArrayList<>();
         jaasModules.add(ALLOWED_LOGIN_MODULES_DEFAULT);
         jaasModules.addAll(Arrays.asList(customJaas));
-        System.setProperty(org.apache.kafka.common.security.JaasUtils.ALLOWED_LOGIN_MODULES_CONFIG, String.join(",", jaasModules));
+        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, String.join(",", jaasModules));
     }
 
 }

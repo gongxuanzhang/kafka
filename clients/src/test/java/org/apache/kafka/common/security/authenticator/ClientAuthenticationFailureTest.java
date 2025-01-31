@@ -76,7 +76,7 @@ public class ClientAuthenticationFailureTest {
         TestJaasConfig testJaasConfig = TestJaasConfig.createConfiguration("PLAIN", Collections.singletonList("PLAIN"));
         testJaasConfig.setClientOptions("PLAIN", TestJaasConfig.USERNAME, "anotherpassword");
         server = createEchoServer(securityProtocol);
-        JaasUtils.allowDefaultJaasAndCustomJass();
+        JaasUtils.allowDefaultJaasAndCustomJaas();
     }
 
     @AfterEach

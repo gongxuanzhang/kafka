@@ -75,7 +75,7 @@ public abstract class SaslAuthenticatorFailureDelayTest {
         credentialCache = new CredentialCache();
         SaslAuthenticatorTest.TestLogin.loginCount.set(0);
         startTimeMs = time.milliseconds();
-        JaasUtils.allowDefaultJaasAndCustomJass();
+        JaasUtils.allowDefaultJaasAndCustomJaas();
     }
 
     @AfterEach

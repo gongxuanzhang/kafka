@@ -175,7 +175,7 @@ public class SaslAuthenticatorTest {
         saslClientConfigs = clientCertStores.getTrustingConfig(serverCertStores);
         credentialCache = new CredentialCache();
         TestLogin.loginCount.set(0);
-        JaasUtils.allowDefaultJaasAndCustomJass("org.apache.kafka.common.security.authenticator.TestDigestLoginModule",
+        JaasUtils.allowDefaultJaasAndCustomJaas("org.apache.kafka.common.security.authenticator.TestDigestLoginModule",
                 "org.apache.kafka.common.security.authenticator.SaslAuthenticatorTest$TestPlainLoginModule");
     }
 
