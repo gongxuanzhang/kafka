@@ -70,13 +70,11 @@ public class JaasContextTest {
 
     @Test
     public void testConfigNoOptions() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testConfigNoOptions");
         checkConfiguration("test.testConfigNoOptions", LoginModuleControlFlag.REQUIRED, new HashMap<>());
     }
 
     @Test
     public void testControlFlag() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testControlFlag");
         LoginModuleControlFlag[] controlFlags = new LoginModuleControlFlag[] {
             LoginModuleControlFlag.REQUIRED,
             LoginModuleControlFlag.REQUISITE,
@@ -92,7 +90,6 @@ public class JaasContextTest {
 
     @Test
     public void testSingleOption() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testSingleOption");
         Map<String, Object> options = new HashMap<>();
         options.put("propName", "propValue");
         checkConfiguration("test.testSingleOption", LoginModuleControlFlag.REQUISITE, options);
@@ -100,7 +97,6 @@ public class JaasContextTest {
 
     @Test
     public void testMultipleOptions() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testMultipleOptions");
         Map<String, Object> options = new HashMap<>();
         for (int i = 0; i < 10; i++)
             options.put("propName" + i, "propValue" + i);
@@ -109,7 +105,6 @@ public class JaasContextTest {
 
     @Test
     public void testQuotedOptionValue() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testQuotedOptionValue");
         Map<String, Object> options = new HashMap<>();
         options.put("propName", "prop value");
         options.put("propName2", "value1 = 1, value2 = 2");
@@ -119,7 +114,6 @@ public class JaasContextTest {
 
     @Test
     public void testQuotedOptionName() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testQuotedOptionName");
         Map<String, Object> options = new HashMap<>();
         options.put("prop name", "propValue");
         String config = "test.testQuotedOptionName required \"prop name\"=propValue;";
@@ -233,7 +227,6 @@ public class JaasContextTest {
 
 
         // add allowed login modules
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "com.sun.security.auth.module.JndiLoginModule, com.sun.security.auth.module.LdapLoginModule");
 
         checkConfiguration("com.sun.security.auth.module.JndiLoginModule", LoginModuleControlFlag.REQUIRED, new HashMap<>());
         checkConfiguration("com.sun.security.auth.module.LdapLoginModule", LoginModuleControlFlag.REQUIRED, new HashMap<>());
@@ -287,7 +280,6 @@ public class JaasContextTest {
 
     @Test
     public void testNumericOptionWithQuotes() throws Exception {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.testNumericOptionWithQuotes");
         Map<String, Object> options = new HashMap<>();
         options.put("option1", "3");
         String config = "test.testNumericOptionWithQuotes required option1=\"3\";";
@@ -296,7 +288,6 @@ public class JaasContextTest {
 
     @Test
     public void testLoadForServerWithListenerNameOverride() throws IOException {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.LoginModuleDefault, test.LoginModuleOverride");
         writeConfiguration(Arrays.asList(
             "KafkaServer { test.LoginModuleDefault required; };",
             "plaintext.KafkaServer { test.LoginModuleOverride requisite; };"
@@ -312,7 +303,6 @@ public class JaasContextTest {
 
     @Test
     public void testLoadForServerWithListenerNameAndFallback() throws IOException {
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, "test.LoginModule");
         writeConfiguration(Arrays.asList(
             "KafkaServer { test.LoginModule required; };",
             "other.KafkaServer { test.LoginModuleOther requisite; };"
