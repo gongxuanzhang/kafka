@@ -20,7 +20,6 @@ import org.apache.kafka.common.config.SaslConfigs;
 import org.apache.kafka.common.config.types.Password;
 import org.apache.kafka.common.network.ListenerName;
 import org.apache.kafka.common.security.JaasContext;
-import org.apache.kafka.common.security.JaasUtils;
 import org.apache.kafka.common.security.auth.AuthenticateCallbackHandler;
 import org.apache.kafka.common.security.auth.Login;
 import org.apache.kafka.common.security.plain.PlainLoginModule;
@@ -60,7 +59,6 @@ public class LoginManagerTest {
                 " required user=\"digestuser\" password=\"digest-secret\";");
         TestJaasConfig.createConfiguration("SCRAM-SHA-256",
                 Collections.singletonList("SCRAM-SHA-256"));
-        JaasUtils.allowDefaultJaasAndCustomJaas("org.apache.kafka.common.security.authenticator.TestDigestLoginModule");
     }
 
     @AfterEach

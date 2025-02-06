@@ -16,32 +16,17 @@
  */
 package org.apache.kafka.common.security;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public final class JaasUtils {
     public static final String JAVA_LOGIN_CONFIG_PARAM = "java.security.auth.login.config";
     @Deprecated
     public static final String DISALLOWED_LOGIN_MODULES_CONFIG = "org.apache.kafka.disallowed.login.modules";
     public static final String ALLOWED_LOGIN_MODULES_CONFIG = "org.apache.kafka.allowed.login.modules";
-    public static final String ALLOWED_LOGIN_MODULES_DEFAULT = String.join(",", List.of(
-            "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule",
-            "org.apache.kafka.common.security.plain.PlainLoginModule",
-            "org.apache.kafka.connect.rest.basic.auth.extension.PropertyFileLoginModule",
-            "org.apache.kafka.common.security.scram.ScramLoginModule",
-            "com.sun.security.auth.module.Krb5LoginModule"
-    ));
+    public static final String DISALLOWED_LOGIN_MODULES_DEFAULT =
+            "com.sun.security.auth.module.JndiLoginModule,com.sun.security.auth.module.LdapLoginModule";
     public static final String SERVICE_NAME = "serviceName";
 
     private JaasUtils() {
-    }
-
-    public static void allowDefaultJaasAndCustomJaas(String... customJaas) {
-        List<String> jaasModules = new ArrayList<>();
-        jaasModules.add(ALLOWED_LOGIN_MODULES_DEFAULT);
-        jaasModules.addAll(Arrays.asList(customJaas));
-        System.setProperty(ALLOWED_LOGIN_MODULES_CONFIG, String.join(",", jaasModules));
     }
 
 }

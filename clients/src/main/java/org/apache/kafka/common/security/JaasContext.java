@@ -34,8 +34,8 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 
 import static org.apache.kafka.common.security.JaasUtils.ALLOWED_LOGIN_MODULES_CONFIG;
-import static org.apache.kafka.common.security.JaasUtils.ALLOWED_LOGIN_MODULES_DEFAULT;
 import static org.apache.kafka.common.security.JaasUtils.DISALLOWED_LOGIN_MODULES_CONFIG;
+import static org.apache.kafka.common.security.JaasUtils.DISALLOWED_LOGIN_MODULES_DEFAULT;
 
 public class JaasContext {
 
@@ -123,22 +123,15 @@ public class JaasContext {
             }
             return;
         }
-        if (disallowedProperty != null) {
-            Set<String> disallowedLoginModuleList = Arrays.stream(disallowedProperty.split(","))
-                    .map(String::trim)
-                    .collect(Collectors.toSet());
-            if (disallowedLoginModuleList.contains(loginModuleName)) {
-                throw new IllegalArgumentException(loginModuleName + " is not allowed. Update System property '"
-                        + DISALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
-            }
-            return;
+        if (disallowedProperty == null) {
+            disallowedProperty = DISALLOWED_LOGIN_MODULES_DEFAULT;
         }
-        Set<String> defaultAllowedLoginModuleList = Arrays.stream(ALLOWED_LOGIN_MODULES_DEFAULT.split(","))
+        Set<String> disallowedLoginModuleList = Arrays.stream(disallowedProperty.split(","))
                 .map(String::trim)
                 .collect(Collectors.toSet());
-        if (!defaultAllowedLoginModuleList.contains(loginModuleName)) {
+        if (disallowedLoginModuleList.contains(loginModuleName)) {
             throw new IllegalArgumentException(loginModuleName + " is not allowed. Update System property '"
-                    + ALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
+                    + DISALLOWED_LOGIN_MODULES_CONFIG + "' to allow " + loginModuleName);
         }
     }
 
