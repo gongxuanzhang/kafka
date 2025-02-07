@@ -31,61 +31,12 @@
   <allow pkg="javax.security" />
 
   <!-- public API-->
+  <allow pkg="org.apache.kafka.clients.consumer" />
   <allow pkg="org.apache.kafka.clients.producer" />
   <allow pkg="org.apache.kafka.clients.admin" />
-  <allow pkg="org.apache.kafka.clients.consumer" />
-  <allow pkg="org.apache.kafka.server.authorizer" />
-  <allow pkg="org.apache.kafka.server.quota" />
-  <allow pkg="org.apache.kafka.server.telemetry" />
-  <allow pkg="org.apache.kafka.server.policy" />
-  <allow pkg="org.apache.kafka.common.metrics.stats" />
-  <allow pkg="org.apache.kafka.common.metrics" />
-  <allow pkg="org.apache.kafka.common.config.provider" />
-  <allow pkg="org.apache.kafka.common.config" />
-  <allow pkg="org.apache.kafka.common.security.token.delegation" />
-  <allow pkg="org.apache.kafka.common.security.auth" />
-  <allow pkg="org.apache.kafka.common.security.plain" />
-  <allow pkg="org.apache.kafka.common.security.oauthbearer" />
-  <allow pkg="org.apache.kafka.common.security.scram" />
-  <allow pkg="org.apache.kafka.common.security" />
-  <allow pkg="org.apache.kafka.common.serialization" />
-  <allow pkg="org.apache.kafka.common.annotation" />
-  <allow pkg="org.apache.kafka.common.quota" />
-  <allow pkg="org.apache.kafka.common.errors" />
-  <allow pkg="org.apache.kafka.common.resource" />
-  <allow pkg="org.apache.kafka.common.acl" />
-  <allow pkg="org.apache.kafka.common.header" />
   <allow pkg="org.apache.kafka.common" />
-  <allow pkg="org.apache.kafka.tools.api" />
-  <allow pkg="org.apache.kafka.coordinator.group.api.assignor" />
-  <allow pkg="org.apache.kafka.streams.test" />
-  <allow pkg="org.apache.kafka.streams.kstream" />
-  <allow pkg="org.apache.kafka.streams.processor.assignment.assignors" />
-  <allow pkg="org.apache.kafka.streams.processor.assignment" />
-  <allow pkg="org.apache.kafka.streams.processor.api" />
-  <allow pkg="org.apache.kafka.streams.processor" />
-  <allow pkg="org.apache.kafka.streams.state" />
-  <allow pkg="org.apache.kafka.streams.errors" />
-  <allow pkg="org.apache.kafka.streams.query" />
-  <allow pkg="org.apache.kafka.streams" />
-  <allow pkg="org.apache.kafka.server" />
-  <allow pkg="org.apache.kafka.server.log.remote.storage" />
-  <allow pkg="org.apache.kafka.connect.tools" />
-  <allow pkg="org.apache.kafka.connect.util" />
-  <allow pkg="org.apache.kafka.connect.health" />
-  <allow pkg="org.apache.kafka.connect.source" />
-  <allow pkg="org.apache.kafka.connect.sink" />
-  <allow pkg="org.apache.kafka.connect.storage" />
-  <allow pkg="org.apache.kafka.connect.components" />
-  <allow pkg="org.apache.kafka.connect.transforms.predicates" />
-  <allow pkg="org.apache.kafka.connect.transforms" />
-  <allow pkg="org.apache.kafka.connect.connector" />
-  <allow pkg="org.apache.kafka.connect.connector.policy" />
-  <allow pkg="org.apache.kafka.connect.errors" />
-  <allow pkg="org.apache.kafka.connect.data" />
-  <allow pkg="org.apache.kafka.connect.header" />
-  <allow pkg="org.apache.kafka.connect.rest" />
-  <allow pkg="org.apache.kafka.connect.mirror" />
+  <allow pkg="org.apache.kafka.common.errors" />
+  <allow pkg="org.apache.kafka.common.serialization" />
   
 
 </import-control>
