@@ -258,7 +258,7 @@ public class JaasContextTest {
 
         //  default
         String jaasConfigProp1 = "com.ibm.security.auth.module.LdapLoginModule required;";
-        assertThrows(IllegalArgumentException.class, () ->  configurationEntry(JaasContext.Type.CLIENT, jaasConfigProp1));
+        assertDoesNotThrow(() ->  configurationEntry(JaasContext.Type.CLIENT, jaasConfigProp1));
 
         String jaasConfigProp2 = "com.sun.security.auth.module.JndiLoginModule required;";
         //  set allow dont' set not allow

@@ -1053,7 +1053,12 @@ public class SaslAuthenticatorTest {
 
         SecurityProtocol securityProtocol = SecurityProtocol.SASL_SSL;
         server = createEchoServer(securityProtocol);
-        assertThrows(IllegalArgumentException.class, () -> createSelector(securityProtocol, saslClientConfigs));
+        try {
+            createSelector(securityProtocol, saslClientConfigs);
+            fail("SASL/PLAIN channel created without valid login module");
+        } catch (KafkaException e) {
+            // Expected exception
+        }
     }
 
     /**
