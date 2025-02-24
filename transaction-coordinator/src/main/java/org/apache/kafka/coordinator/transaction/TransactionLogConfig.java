@@ -19,6 +19,8 @@ package org.apache.kafka.coordinator.transaction;
 import org.apache.kafka.common.config.AbstractConfig;
 import org.apache.kafka.common.config.ConfigDef;
 
+import java.util.Set;
+
 import static org.apache.kafka.common.config.ConfigDef.Importance.HIGH;
 import static org.apache.kafka.common.config.ConfigDef.Importance.LOW;
 import static org.apache.kafka.common.config.ConfigDef.Range.atLeast;
@@ -73,6 +75,10 @@ public final class TransactionLogConfig {
             .define(PRODUCER_ID_EXPIRATION_MS_CONFIG, INT, PRODUCER_ID_EXPIRATION_MS_DEFAULT, atLeast(1), LOW, PRODUCER_ID_EXPIRATION_MS_DOC)
             // Configuration for testing only as default value should be sufficient for typical usage
             .defineInternal(PRODUCER_ID_EXPIRATION_CHECK_INTERVAL_MS_CONFIG, INT, PRODUCER_ID_EXPIRATION_CHECK_INTERVAL_MS_DEFAULT, atLeast(1), LOW, PRODUCER_ID_EXPIRATION_CHECK_INTERVAL_MS_DOC);
+
+    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
+            TransactionLogConfig.PRODUCER_ID_EXPIRATION_MS_CONFIG,
+            TransactionLogConfig.TRANSACTION_PARTITION_VERIFICATION_ENABLE_CONFIG);
 
     private final AbstractConfig config;
     private final int transactionTopicMinISR;

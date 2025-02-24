@@ -21,6 +21,8 @@ import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.metrics.JmxReporter;
 import org.apache.kafka.common.metrics.Sensor;
 
+import java.util.Set;
+
 import static org.apache.kafka.common.config.ConfigDef.Importance.LOW;
 import static org.apache.kafka.common.config.ConfigDef.Range.atLeast;
 import static org.apache.kafka.common.config.ConfigDef.Type.INT;
@@ -78,4 +80,7 @@ public class MetricConfigs {
 
             // Kafka Client Telemetry Metrics Configuration
             .define(CLIENT_TELEMETRY_MAX_BYTES_CONFIG, INT, CLIENT_TELEMETRY_MAX_BYTES_DEFAULT, atLeast(1), LOW, CLIENT_TELEMETRY_MAX_BYTES_DOC);
+
+    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
+            MetricConfigs.METRIC_REPORTER_CLASSES_CONFIG);
 }

@@ -18,6 +18,8 @@ package org.apache.kafka.common.config;
 
 import org.apache.kafka.common.config.ConfigDef.Range;
 
+import java.util.Set;
+
 public class SaslConfigs {
 
     private static final String OAUTHBEARER_NOTE = " Currently applies only to OAUTHBEARER.";
@@ -196,6 +198,20 @@ public class SaslConfigs {
     public static final boolean DEFAULT_SASL_OAUTHBEARER_HEADER_URLENCODE = false;
     public static final String SASL_OAUTHBEARER_HEADER_URLENCODE_DOC = "The (optional) setting to enable the OAuth client to URL-encode the client_id and client_secret in the authorization header"
             + " in accordance with RFC6749, see <a href=\"https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1\">here</a> for more details. The default value is set to 'false' for backward compatibility";
+    
+    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
+            SaslConfigs.SASL_JAAS_CONFIG,
+            SaslConfigs.SASL_KERBEROS_SERVICE_NAME,
+            SaslConfigs.SASL_KERBEROS_KINIT_CMD,
+            SaslConfigs.SASL_KERBEROS_TICKET_RENEW_WINDOW_FACTOR,
+            SaslConfigs.SASL_KERBEROS_TICKET_RENEW_JITTER,
+            SaslConfigs.SASL_KERBEROS_MIN_TIME_BEFORE_RELOGIN,
+            SaslConfigs.SASL_LOGIN_REFRESH_WINDOW_FACTOR,
+            SaslConfigs.SASL_LOGIN_REFRESH_WINDOW_JITTER,
+            SaslConfigs.SASL_LOGIN_REFRESH_MIN_PERIOD_SECONDS,
+            SaslConfigs.SASL_LOGIN_REFRESH_BUFFER_SECONDS
+    );
+    
     public static void addClientSaslSupport(ConfigDef config) {
         config.define(SaslConfigs.SASL_KERBEROS_SERVICE_NAME, ConfigDef.Type.STRING, null, ConfigDef.Importance.MEDIUM, SaslConfigs.SASL_KERBEROS_SERVICE_NAME_DOC)
                 .define(SaslConfigs.SASL_KERBEROS_KINIT_CMD, ConfigDef.Type.STRING, SaslConfigs.DEFAULT_KERBEROS_KINIT_CMD, ConfigDef.Importance.LOW, SaslConfigs.SASL_KERBEROS_KINIT_CMD_DOC)

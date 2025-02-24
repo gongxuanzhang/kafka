@@ -24,6 +24,8 @@ import org.apache.kafka.server.authorizer.Authorizer;
 import org.apache.kafka.server.record.BrokerCompressionType;
 import org.apache.kafka.storage.internals.log.LogConfig;
 
+import java.util.Set;
+
 import static org.apache.kafka.common.config.ConfigDef.Importance.HIGH;
 import static org.apache.kafka.common.config.ConfigDef.Importance.LOW;
 import static org.apache.kafka.common.config.ConfigDef.Importance.MEDIUM;
@@ -151,4 +153,11 @@ public class ServerConfigs {
             .defineInternal(UNSTABLE_API_VERSIONS_ENABLE_CONFIG, BOOLEAN, false, HIGH)
             // This indicates whether unreleased MetadataVersions should be enabled on this node.
             .defineInternal(UNSTABLE_FEATURE_VERSIONS_ENABLE_CONFIG, BOOLEAN, false, HIGH);
+            
+    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
+            ServerConfigs.MESSAGE_MAX_BYTES_CONFIG,
+            ServerConfigs.NUM_IO_THREADS_CONFIG,
+            ServerConfigs.BACKGROUND_THREADS_CONFIG);
+        
+           
 }

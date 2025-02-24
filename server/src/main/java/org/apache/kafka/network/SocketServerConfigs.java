@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -176,6 +177,15 @@ public class SocketServerConfigs {
         "^(.*)://\\[?([0-9a-zA-Z\\-%._:]*)\\]?:(-?[0-9]+)");
 
     public static final Map<ListenerName, SecurityProtocol> DEFAULT_NAME_TO_SECURITY_PROTO;
+
+    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
+            SocketServerConfigs.MAX_CONNECTIONS_PER_IP_CONFIG,
+            SocketServerConfigs.MAX_CONNECTIONS_PER_IP_OVERRIDES_CONFIG,
+            SocketServerConfigs.MAX_CONNECTIONS_CONFIG,
+            SocketServerConfigs.MAX_CONNECTION_CREATION_RATE_CONFIG,
+            SocketServerConfigs.LISTENERS_CONFIG,
+            SocketServerConfigs.LISTENER_SECURITY_PROTOCOL_MAP_CONFIG,
+            SocketServerConfigs.NUM_NETWORK_THREADS_CONFIG);
 
     static {
         HashMap<ListenerName, SecurityProtocol> nameToSecurityProtocol = new HashMap<>();

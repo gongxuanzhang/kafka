@@ -20,6 +20,8 @@ import org.apache.kafka.common.config.ConfigDef;
 import org.apache.kafka.common.config.TopicConfig;
 import org.apache.kafka.server.config.ServerTopicConfigSynonyms;
 
+import java.util.Set;
+
 import static org.apache.kafka.common.config.ConfigDef.Importance.MEDIUM;
 import static org.apache.kafka.common.config.ConfigDef.Range.atLeast;
 import static org.apache.kafka.common.config.ConfigDef.Range.between;
@@ -85,6 +87,14 @@ public class CleanerConfig {
             .define(LOG_CLEANER_DELETE_RETENTION_MS_PROP, LONG, LogConfig.DEFAULT_DELETE_RETENTION_MS, atLeast(0), MEDIUM, LOG_CLEANER_DELETE_RETENTION_MS_DOC)
             .define(LOG_CLEANER_MIN_COMPACTION_LAG_MS_PROP, LONG, LogConfig.DEFAULT_MIN_COMPACTION_LAG_MS, atLeast(0), MEDIUM, LOG_CLEANER_MIN_COMPACTION_LAG_MS_DOC)
             .define(LOG_CLEANER_MAX_COMPACTION_LAG_MS_PROP, LONG, LogConfig.DEFAULT_MAX_COMPACTION_LAG_MS, atLeast(1), MEDIUM, LOG_CLEANER_MAX_COMPACTION_LAG_MS_DOC);
+
+    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
+            CleanerConfig.LOG_CLEANER_THREADS_PROP,
+            CleanerConfig.LOG_CLEANER_DEDUPE_BUFFER_SIZE_PROP,
+            CleanerConfig.LOG_CLEANER_DEDUPE_BUFFER_LOAD_FACTOR_PROP,
+            CleanerConfig.LOG_CLEANER_IO_BUFFER_SIZE_PROP,
+            CleanerConfig.LOG_CLEANER_IO_MAX_BYTES_PER_SECOND_PROP,
+            CleanerConfig.LOG_CLEANER_BACKOFF_MS_PROP);
 
     public final int numThreads;
     public final long dedupeBufferSize;
