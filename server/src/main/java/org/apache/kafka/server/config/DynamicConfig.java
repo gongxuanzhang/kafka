@@ -29,6 +29,7 @@ import org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfig;
 import org.apache.kafka.server.metrics.MetricConfigs;
 import org.apache.kafka.storage.internals.log.CleanerConfig;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
@@ -44,18 +45,19 @@ public class DynamicConfig {
     public static final Set<String> ALL_DYNAMIC_CONFIGS;
 
     static {
-        ALL_DYNAMIC_CONFIGS = new HashSet<>(SslConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(CleanerConfig.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(ServerConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(ServerTopicConfigSynonyms.TOPIC_CONFIG_SYNONYMS.values());
-        ALL_DYNAMIC_CONFIGS.addAll(ServerLogConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(ReplicationConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(MetricConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(BrokerSecurityConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(SocketServerConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(SaslConfigs.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(TransactionLogConfig.RECONFIGURABLE_CONFIGS);
-        ALL_DYNAMIC_CONFIGS.addAll(RemoteLogManagerConfig.RECONFIGURABLE_CONFIGS);
+        Set<String> allDynamicConfigs = new HashSet<>(SslConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(CleanerConfig.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(ServerConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(ServerTopicConfigSynonyms.TOPIC_CONFIG_SYNONYMS.values());
+        allDynamicConfigs.addAll(ServerLogConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(ReplicationConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(MetricConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(BrokerSecurityConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(SocketServerConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(SaslConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(TransactionLogConfig.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(RemoteLogManagerConfig.RECONFIGURABLE_CONFIGS);
+        ALL_DYNAMIC_CONFIGS = Collections.unmodifiableSet(allDynamicConfigs);
     }
 
 
@@ -84,8 +86,9 @@ public class DynamicConfig {
         public static final Set<String> NON_DYNAMIC_PROPS;
 
         static {
-            NON_DYNAMIC_PROPS = new TreeSet<>(AbstractKafkaConfig.CONFIG_DEF.names());
-            NON_DYNAMIC_PROPS.removeAll(BROKER_CONFIGS.names());
+            Set<String> props = new TreeSet<>(AbstractKafkaConfig.CONFIG_DEF.names());
+            props.removeAll(BROKER_CONFIGS.names());
+            NON_DYNAMIC_PROPS = Collections.unmodifiableSet(props);
         }
 
         public static Map<String, ConfigDef.ConfigKey> configKeys() {
