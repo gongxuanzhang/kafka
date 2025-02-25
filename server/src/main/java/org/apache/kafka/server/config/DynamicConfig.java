@@ -51,6 +51,9 @@ public class DynamicConfig {
         allDynamicConfigs.addAll(ServerTopicConfigSynonyms.TOPIC_CONFIG_SYNONYMS.values());
         allDynamicConfigs.addAll(ServerConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.add(ServerLogConfigs.NUM_RECOVERY_THREADS_PER_DATA_DIR_CONFIG);
+        allDynamicConfigs.add(ServerConfigs.MESSAGE_MAX_BYTES_CONFIG);
+        allDynamicConfigs.add(ServerConfigs.NUM_IO_THREADS_CONFIG);
+        allDynamicConfigs.add(ServerConfigs.BACKGROUND_THREADS_CONFIG);
         allDynamicConfigs.add(ReplicationConfigs.NUM_REPLICA_FETCHERS_CONFIG);
         allDynamicConfigs.addAll(MetricConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(BrokerSecurityConfigs.RECONFIGURABLE_CONFIGS);
