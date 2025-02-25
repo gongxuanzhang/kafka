@@ -153,6 +153,24 @@ public class SslConfigs {
             SslConfigs.SSL_KEYSTORE_CERTIFICATE_CHAIN_CONFIG,
             SslConfigs.SSL_KEYSTORE_KEY_CONFIG,
             SslConfigs.SSL_TRUSTSTORE_CERTIFICATES_CONFIG);
+    
+    public static final Set<String> DYNAMIC_LISTENER_CONFIGS = Set.of(
+            SslConfigs.SSL_PROTOCOL_CONFIG,
+            SslConfigs.SSL_PROVIDER_CONFIG,
+            SslConfigs.SSL_CIPHER_SUITES_CONFIG,
+            SslConfigs.SSL_ENABLED_PROTOCOLS_CONFIG,
+            SslConfigs.SSL_KEYSTORE_TYPE_CONFIG,
+            SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG,
+            SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG,
+            SslConfigs.SSL_KEY_PASSWORD_CONFIG,
+            SslConfigs.SSL_TRUSTSTORE_TYPE_CONFIG,
+            SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG,
+            SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG,
+            SslConfigs.SSL_KEYMANAGER_ALGORITHM_CONFIG,
+            SslConfigs.SSL_TRUSTMANAGER_ALGORITHM_CONFIG,
+            SslConfigs.SSL_ENDPOINT_IDENTIFICATION_ALGORITHM_CONFIG,
+            SslConfigs.SSL_SECURE_RANDOM_IMPLEMENTATION_CONFIG,
+            SslConfigs.SSL_ENGINE_FACTORY_CLASS_CONFIG);
 
     public static final Set<String> NON_RECONFIGURABLE_CONFIGS = Set.of(
             BrokerSecurityConfigs.SSL_CLIENT_AUTH_CONFIG,

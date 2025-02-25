@@ -46,10 +46,12 @@ public class DynamicConfig {
 
     static {
         Set<String> allDynamicConfigs = new HashSet<>(SslConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.addAll(SslConfigs.DYNAMIC_LISTENER_CONFIGS);
         allDynamicConfigs.addAll(CleanerConfig.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(ServerTopicConfigSynonyms.TOPIC_CONFIG_SYNONYMS.values());
+        allDynamicConfigs.addAll(ServerConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.add(ServerLogConfigs.NUM_RECOVERY_THREADS_PER_DATA_DIR_CONFIG);
-        allDynamicConfigs.addAll(ReplicationConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.add(ReplicationConfigs.NUM_REPLICA_FETCHERS_CONFIG);
         allDynamicConfigs.addAll(MetricConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(BrokerSecurityConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(SocketServerConfigs.RECONFIGURABLE_CONFIGS);
