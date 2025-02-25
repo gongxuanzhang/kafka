@@ -47,11 +47,8 @@ public class DynamicConfig {
     static {
         Set<String> allDynamicConfigs = new HashSet<>(SslConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(CleanerConfig.RECONFIGURABLE_CONFIGS);
-        allDynamicConfigs.add(ServerConfigs.MESSAGE_MAX_BYTES_CONFIG);
-        allDynamicConfigs.add(ServerConfigs.NUM_IO_THREADS_CONFIG);
-        allDynamicConfigs.add(ServerConfigs.BACKGROUND_THREADS_CONFIG);
         allDynamicConfigs.addAll(ServerTopicConfigSynonyms.TOPIC_CONFIG_SYNONYMS.values());
-        allDynamicConfigs.addAll(ServerLogConfigs.RECONFIGURABLE_CONFIGS);
+        allDynamicConfigs.add(ServerLogConfigs.NUM_RECOVERY_THREADS_PER_DATA_DIR_CONFIG);
         allDynamicConfigs.addAll(ReplicationConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(MetricConfigs.RECONFIGURABLE_CONFIGS);
         allDynamicConfigs.addAll(BrokerSecurityConfigs.RECONFIGURABLE_CONFIGS);

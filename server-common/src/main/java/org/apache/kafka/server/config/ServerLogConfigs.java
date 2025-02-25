@@ -19,7 +19,6 @@ package org.apache.kafka.server.config;
 
 import org.apache.kafka.common.config.TopicConfig;
 
-import java.util.Set;
 
 import static org.apache.kafka.server.config.ServerTopicConfigSynonyms.LOG_PREFIX;
 
@@ -164,6 +163,4 @@ public class ServerLogConfigs {
     public static final String LOG_DIR_FAILURE_TIMEOUT_MS_DOC = "If the broker is unable to successfully communicate to the controller that some log " +
         "directory has failed for longer than this time, the broker will fail and shut down.";
 
-    public static final Set<String> RECONFIGURABLE_CONFIGS = Set.of(
-            ServerLogConfigs.NUM_RECOVERY_THREADS_PER_DATA_DIR_CONFIG);
 }
