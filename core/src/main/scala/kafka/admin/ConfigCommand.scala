@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.{ExecutionException, TimeUnit}
 import java.util.{Collections, Properties}
 import joptsimple._
-import kafka.server.DynamicConfig
+import org.apache.kafka.server.config.DynamicConfig
 import kafka.utils.Implicits._
 import kafka.utils.Logging
 import org.apache.kafka.clients.admin.{Admin, AlterClientQuotasOptions, AlterConfigOp, AlterConfigsOptions, ConfigEntry, DescribeClusterOptions, DescribeConfigsOptions, ListTopicsOptions, ScramCredentialInfo, UserScramCredentialDeletion, UserScramCredentialUpsertion, ScramMechanism => PublicScramMechanism}

@@ -71,13 +71,11 @@ public class DynamicConfig {
             ConfigDef configs = QuotaConfig.brokerQuotaConfigs();
 
             // Filter and define all dynamic configurations
-            for (Map.Entry<String, ConfigDef.ConfigKey> entry :
-                    AbstractKafkaConfig.CONFIG_DEF.configKeys().entrySet()) {
-                String configName = entry.getKey();
+            AbstractKafkaConfig.CONFIG_DEF.configKeys().forEach((configName, value) -> {
                 if (ALL_DYNAMIC_CONFIGS.contains(configName)) {
-                    configs.define(entry.getValue());
+                    configs.define(value);
                 }
-            }
+            });
             BROKER_CONFIGS = configs;
         }
 

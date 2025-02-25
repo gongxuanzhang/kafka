@@ -22,7 +22,7 @@ import java.util.{Collections, Properties}
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import kafka.cluster.EndPoint
-import kafka.log.{LogCleaner, LogManager}
+import kafka.log.LogManager
 import kafka.network.{DataPlaneAcceptor, SocketServer}
 import kafka.server.DynamicBrokerConfig._
 import kafka.utils.{CoreUtils, Logging}
@@ -36,6 +36,7 @@ import org.apache.kafka.common.utils.{ConfigUtils, Utils}
 import org.apache.kafka.coordinator.transaction.TransactionLogConfig
 import org.apache.kafka.network.SocketServerConfigs
 import org.apache.kafka.server.ProcessRole
+import org.apache.kafka.server.config.DynamicConfig
 import org.apache.kafka.server.config.{ReplicationConfigs, ServerConfigs, ServerLogConfigs, ServerTopicConfigSynonyms}
 import org.apache.kafka.server.log.remote.storage.RemoteLogManagerConfig
 import org.apache.kafka.server.metrics.{ClientMetricsReceiverPlugin, MetricConfigs}
@@ -81,17 +82,7 @@ object DynamicBrokerConfig {
 
   private[server] val DynamicSecurityConfigs = SslConfigs.RECONFIGURABLE_CONFIGS.asScala
   private[server] val DynamicProducerStateManagerConfig = Set(TransactionLogConfig.PRODUCER_ID_EXPIRATION_MS_CONFIG, TransactionLogConfig.TRANSACTION_PARTITION_VERIFICATION_ENABLE_CONFIG)
-
-  val AllDynamicConfigs = DynamicSecurityConfigs ++
-    LogCleaner.ReconfigurableConfigs ++
-    DynamicLogConfig.ReconfigurableConfigs ++
-    DynamicThreadPool.ReconfigurableConfigs ++
-    Set(MetricConfigs.METRIC_REPORTER_CLASSES_CONFIG) ++
-    DynamicListenerConfig.ReconfigurableConfigs ++
-    SocketServer.ReconfigurableConfigs ++
-    DynamicProducerStateManagerConfig ++
-    DynamicRemoteLogConfig.ReconfigurableConfigs
-
+ 
   private val ClusterLevelListenerConfigs = Set(SocketServerConfigs.MAX_CONNECTIONS_CONFIG, SocketServerConfigs.MAX_CONNECTION_CREATION_RATE_CONFIG, SocketServerConfigs.NUM_NETWORK_THREADS_CONFIG)
   private val PerBrokerConfigs = (DynamicSecurityConfigs ++ DynamicListenerConfig.ReconfigurableConfigs).diff(
     ClusterLevelListenerConfigs)
@@ -152,7 +143,7 @@ object DynamicBrokerConfig {
   }
 
   private def nonDynamicConfigs(props: Properties): Set[String] = {
-    props.asScala.keySet.intersect(DynamicConfig.Broker.nonDynamicProps)
+    props.asScala.keySet.intersect(DynamicConfig.Broker.NON_DYNAMIC_PROPS.asScala)
   }
 
   private def securityConfigsWithoutListenerPrefix(props: Properties): Set[String] = {
@@ -169,7 +160,7 @@ object DynamicBrokerConfig {
   }
 
   private[server] def dynamicConfigUpdateModes: util.Map[String, String] = {
-    AllDynamicConfigs.map { name =>
+    DynamicConfig.ALL_DYNAMIC_CONFIGS.asScala.map { name =>
       val mode = if (PerBrokerConfigs.contains(name)) "per-broker" else "cluster-wide"
       name -> mode
     }.toMap.asJava
@@ -282,7 +273,7 @@ class DynamicBrokerConfig(private val kafkaConfig: KafkaConfig) extends Logging 
   }
 
   private def verifyReconfigurableConfigs(configNames: Set[String]): Unit = {
-    val nonDynamic = configNames.intersect(DynamicConfig.Broker.nonDynamicProps)
+    val nonDynamic = configNames.intersect(DynamicConfig.Broker.NON_DYNAMIC_PROPS.asScala)
     require(nonDynamic.isEmpty, s"Reconfigurable contains non-dynamic configs $nonDynamic")
   }
 

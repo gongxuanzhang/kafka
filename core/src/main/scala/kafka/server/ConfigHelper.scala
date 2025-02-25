@@ -20,7 +20,7 @@ package kafka.server
 import kafka.network.RequestChannel
 
 import java.util.{Collections, Properties}
-import kafka.utils.{LoggingController, Logging}
+import kafka.utils.{Logging, LoggingController}
 import org.apache.kafka.common.acl.AclOperation.DESCRIBE_CONFIGS
 import org.apache.kafka.common.config.{AbstractConfig, ConfigDef, ConfigResource}
 import org.apache.kafka.common.errors.{ApiException, InvalidRequestException}
@@ -34,7 +34,7 @@ import org.apache.kafka.common.resource.Resource.CLUSTER_NAME
 import org.apache.kafka.common.resource.ResourceType.{CLUSTER, GROUP, TOPIC}
 import org.apache.kafka.coordinator.group.GroupConfig
 import org.apache.kafka.metadata.ConfigRepository
-import org.apache.kafka.server.config.ServerTopicConfigSynonyms
+import org.apache.kafka.server.config.{DynamicConfig, ServerTopicConfigSynonyms}
 import org.apache.kafka.storage.internals.log.LogConfig
 
 import scala.collection.mutable.ListBuffer
@@ -250,7 +250,7 @@ class ConfigHelper(metadataCache: MetadataCache, config: KafkaConfig, configRepo
       .filter(perBrokerConfig || _.source == ConfigSource.DYNAMIC_DEFAULT_BROKER_CONFIG.id)
     val synonyms = if (!includeSynonyms) List.empty else allSynonyms
     val source = if (allSynonyms.isEmpty) ConfigSource.DEFAULT_CONFIG.id else allSynonyms.head.source
-    val readOnly = !DynamicBrokerConfig.AllDynamicConfigs.contains(name)
+    val readOnly = !DynamicConfig.ALL_DYNAMIC_CONFIGS.contains(name)
 
     val dataType = configResponseType(configEntryType)
     val configDocumentation = if (includeDocumentation) brokerDocumentation(name) else null
