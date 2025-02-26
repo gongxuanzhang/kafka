@@ -16,6 +16,7 @@
  */
 package org.apache.kafka.common;
 
+import org.apache.kafka.common.annotation.InterfaceStability;
 import org.apache.kafka.common.security.auth.SecurityProtocol;
 
 import java.util.Objects;
@@ -25,6 +26,7 @@ import java.util.Optional;
  * Represents a broker endpoint.
  */
 
+@InterfaceStability.Evolving
 public class Endpoint {
 
     private final String listenerName;
@@ -79,9 +81,9 @@ public class Endpoint {
 
         Endpoint that = (Endpoint) o;
         return Objects.equals(this.listenerName, that.listenerName) &&
-            Objects.equals(this.securityProtocol, that.securityProtocol) &&
-            Objects.equals(this.host, that.host) &&
-            this.port == that.port;
+                Objects.equals(this.securityProtocol, that.securityProtocol) &&
+                Objects.equals(this.host, that.host) &&
+                this.port == that.port;
 
     }
 
@@ -93,10 +95,10 @@ public class Endpoint {
     @Override
     public String toString() {
         return "Endpoint(" +
-            "listenerName='" + listenerName + '\'' +
-            ", securityProtocol=" + securityProtocol +
-            ", host='" + host + '\'' +
-            ", port=" + port +
-            ')';
+                "listenerName='" + listenerName + '\'' +
+                ", securityProtocol=" + securityProtocol +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ')';
     }
 }
