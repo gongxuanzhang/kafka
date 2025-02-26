@@ -125,7 +125,6 @@ import java.util.Set;
  * {@code InterfaceStability} annotation and this notice once the API is considered stable.
  * <p>
  */
-@InterfaceStability.Evolving
 public interface Admin extends AutoCloseable {
 
     /**

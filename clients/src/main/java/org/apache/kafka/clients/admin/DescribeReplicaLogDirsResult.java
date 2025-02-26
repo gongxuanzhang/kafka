@@ -18,7 +18,6 @@ package org.apache.kafka.clients.admin;
 
 import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.TopicPartitionReplica;
-import org.apache.kafka.common.annotation.InterfaceStability;
 import org.apache.kafka.common.requests.DescribeLogDirsResponse;
 
 import java.util.Collection;
@@ -32,7 +31,6 @@ import java.util.concurrent.ExecutionException;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class DescribeReplicaLogDirsResult {
     private final Map<TopicPartitionReplica, KafkaFuture<ReplicaLogDirInfo>> futures;
 

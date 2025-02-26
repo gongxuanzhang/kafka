@@ -17,7 +17,6 @@
 
 package org.apache.kafka.clients.admin;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Map;
 
@@ -26,6 +25,5 @@ import java.util.Map;
  *
  * The API of this class is evolving. See {@link AdminClient} for details.
  */
-@InterfaceStability.Evolving
 public class AlterPartitionReassignmentsOptions extends AbstractOptions<AlterPartitionReassignmentsOptions> {
 }

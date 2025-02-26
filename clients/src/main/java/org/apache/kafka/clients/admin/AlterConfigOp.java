@@ -17,7 +17,6 @@
 
 package org.apache.kafka.clients.admin;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,7 +30,6 @@ import java.util.stream.Collectors;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class AlterConfigOp {
 
     public enum OpType {

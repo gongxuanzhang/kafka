@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.clients.admin;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -27,7 +26,6 @@ import java.util.OptionalInt;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class DescribeProducersOptions extends AbstractOptions<DescribeProducersOptions> {
     private OptionalInt brokerId = OptionalInt.empty();
 

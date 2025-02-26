@@ -17,7 +17,6 @@
 
 package org.apache.kafka.clients.admin;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Collection;
 
@@ -26,7 +25,6 @@ import java.util.Collection;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class CreateAclsOptions extends AbstractOptions<CreateAclsOptions> {
 
     /**

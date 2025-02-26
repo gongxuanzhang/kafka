@@ -18,7 +18,6 @@
 package org.apache.kafka.clients.admin;
 
 import org.apache.kafka.common.KafkaFuture;
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +29,6 @@ import java.util.Objects;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class AlterUserScramCredentialsResult {
     private final Map<String, KafkaFuture<Void>> futures;
 

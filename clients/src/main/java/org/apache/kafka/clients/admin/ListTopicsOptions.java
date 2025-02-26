@@ -17,7 +17,6 @@
 
 package org.apache.kafka.clients.admin;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Objects;
 
@@ -26,7 +25,6 @@ import java.util.Objects;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class ListTopicsOptions extends AbstractOptions<ListTopicsOptions> {
 
     private boolean listInternal = false;

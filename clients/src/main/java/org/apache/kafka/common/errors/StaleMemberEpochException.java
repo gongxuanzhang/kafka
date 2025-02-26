@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.errors;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 /**
  * The StaleMemberEpochException is used in the context of the new
@@ -24,7 +23,6 @@ import org.apache.kafka.common.annotation.InterfaceStability;
  * OffsetCommit/Fetch APIs when the member epoch received does not
  * match the current member epoch.
  */
-@InterfaceStability.Evolving
 public class StaleMemberEpochException extends ApiException {
     public StaleMemberEpochException(String message) {
         super(message);

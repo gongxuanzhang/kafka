@@ -20,7 +20,6 @@ package org.apache.kafka.clients.admin;
 import org.apache.kafka.common.ConsumerGroupState;
 import org.apache.kafka.common.GroupState;
 import org.apache.kafka.common.GroupType;
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,7 +31,6 @@ import java.util.stream.Collectors;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class ListConsumerGroupsOptions extends AbstractOptions<ListConsumerGroupsOptions> {
 
     private Set<GroupState> groupStates = Collections.emptySet();

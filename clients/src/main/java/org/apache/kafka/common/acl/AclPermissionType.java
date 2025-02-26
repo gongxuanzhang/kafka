@@ -17,7 +17,6 @@
 
 package org.apache.kafka.common.acl;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -27,7 +26,6 @@ import java.util.Locale;
  *
  * The API for this class is still evolving and we may break compatibility in minor releases, if necessary.
  */
-@InterfaceStability.Evolving
 public enum AclPermissionType {
     /**
      * Represents any AclPermissionType which this client cannot understand,

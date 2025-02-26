@@ -19,7 +19,6 @@ package org.apache.kafka.clients.admin;
 
 import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.acl.AclBinding;
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Collection;
 import java.util.Map;
@@ -29,7 +28,6 @@ import java.util.Map;
  *
  * The API of this class is evolving, see {@link Admin} for details.
  */
-@InterfaceStability.Evolving
 public class CreateAclsResult {
     private final Map<AclBinding, KafkaFuture<Void>> futures;
 

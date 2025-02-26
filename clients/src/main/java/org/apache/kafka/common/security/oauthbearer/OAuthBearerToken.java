@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.security.oauthbearer;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Set;
 
@@ -47,7 +46,6 @@ import java.util.Set;
  *      <a href="https://tools.ietf.org/html/rfc6750#section-2.1">RFC 6750
  *      Section 2.1</a>
  */
-@InterfaceStability.Evolving
 public interface OAuthBearerToken {
     /**
      * The <code>b64token</code> value as defined in

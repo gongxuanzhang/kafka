@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.security.oauthbearer;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Objects;
 
@@ -40,7 +39,6 @@ import javax.security.auth.callback.Callback;
  * update the {@code InterfaceStability} annotation and this notice once the API
  * is considered stable.
  */
-@InterfaceStability.Evolving
 public class OAuthBearerValidatorCallback implements Callback {
     private final String tokenValue;
     private OAuthBearerToken token = null;

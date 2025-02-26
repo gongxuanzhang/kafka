@@ -17,12 +17,10 @@
 
 package org.apache.kafka.connect.mirror;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 /**
  * An interface used by the MirrorMaker connectors to manage topics names between source and target clusters.
  */
-@InterfaceStability.Evolving
 public interface ReplicationPolicy {
 
     /**

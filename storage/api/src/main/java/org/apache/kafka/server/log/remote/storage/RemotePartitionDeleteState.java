@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.server.log.remote.storage;
 
-import org.apache.kafka.common.annotation.InterfaceStability;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -48,7 +47,6 @@ import java.util.stream.Collectors;
  * </PRE>
  * </P>
  */
-@InterfaceStability.Evolving
 public enum RemotePartitionDeleteState {
 
     /**
