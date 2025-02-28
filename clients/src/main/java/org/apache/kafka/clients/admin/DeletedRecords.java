@@ -19,8 +19,6 @@ package org.apache.kafka.clients.admin;
 
 /**
  * Represents information about deleted records
- *
- * The API for this class is still evolving and we may break compatibility in minor releases, if necessary.
  */
 public class DeletedRecords {
 

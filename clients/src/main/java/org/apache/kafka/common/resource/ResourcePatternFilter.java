@@ -23,8 +23,6 @@ import static org.apache.kafka.common.resource.ResourcePattern.WILDCARD_RESOURCE
 
 /**
  * Represents a filter that can match {@link ResourcePattern}.
- * <p>
- * The API for this class is still evolving and we may break compatibility in minor releases, if necessary.
  */
 public class ResourcePatternFilter {
     /**

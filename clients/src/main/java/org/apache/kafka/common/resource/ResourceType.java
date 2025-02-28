@@ -22,8 +22,6 @@ import java.util.Locale;
 
 /**
  * Represents a type of resource which an ACL can be applied to.
- *
- * The API for this class is still evolving and we may break compatibility in minor releases, if necessary.
  */
 public enum ResourceType {
     /**

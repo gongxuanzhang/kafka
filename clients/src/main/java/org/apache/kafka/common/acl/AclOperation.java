@@ -36,7 +36,6 @@ import java.util.Locale;
  *
  * <li><code>ALLOW ALTER_CONFIGS</code> implies <code>ALLOW DESCRIBE_CONFIGS</code>
  * </ul>
- * The API for this class is still evolving and we may break compatibility in minor releases, if necessary.
  */
 public enum AclOperation {
     /**

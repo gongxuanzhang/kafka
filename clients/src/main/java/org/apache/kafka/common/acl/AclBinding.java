@@ -23,8 +23,6 @@ import java.util.Objects;
 
 /**
  * Represents a binding between a resource pattern and an access control entry.
- *
- * The API for this class is still evolving and we may break compatibility in minor releases, if necessary.
  */
 public class AclBinding {
     private final ResourcePattern pattern;
