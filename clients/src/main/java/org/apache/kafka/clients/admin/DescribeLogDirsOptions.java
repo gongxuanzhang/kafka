@@ -17,9 +17,7 @@
 
 package org.apache.kafka.clients.admin;
 
-
 import java.util.Collection;
-
 
 /**
  * Options for {@link Admin#describeLogDirs(Collection)}

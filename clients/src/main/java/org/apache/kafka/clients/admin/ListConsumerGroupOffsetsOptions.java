@@ -17,12 +17,9 @@
 
 package org.apache.kafka.clients.admin;
 
-
-
 /**
  * Options for {@link Admin#listConsumerGroupOffsets(java.util.Map)} and {@link Admin#listConsumerGroupOffsets(String)}.
  * <p>
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListConsumerGroupOffsetsOptions extends AbstractOptions<ListConsumerGroupOffsetsOptions> {
 

@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.errors;
 
-
 public class UnreleasedInstanceIdException extends ApiException {
     public UnreleasedInstanceIdException(String message) {
         super(message);

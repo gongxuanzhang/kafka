@@ -17,7 +17,6 @@
 
 package org.apache.kafka.server.authorizer;
 
-
 public enum AuthorizationResult {
     ALLOWED,
     DENIED

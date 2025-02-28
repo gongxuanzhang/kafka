@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.errors;
 
-
 public class FencedMemberEpochException extends ApiException {
     public FencedMemberEpochException(String message) {
         super(message);

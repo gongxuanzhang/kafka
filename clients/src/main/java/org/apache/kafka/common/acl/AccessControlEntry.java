@@ -17,7 +17,6 @@
 
 package org.apache.kafka.common.acl;
 
-
 import java.util.Objects;
 
 /**
