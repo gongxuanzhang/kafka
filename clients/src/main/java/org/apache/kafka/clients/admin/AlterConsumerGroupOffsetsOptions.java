@@ -20,8 +20,6 @@ import java.util.Map;
 
 /**
  * Options for the {@link AdminClient#alterConsumerGroupOffsets(String, Map, AlterConsumerGroupOffsetsOptions)} call.
- *
- * The API of this class is evolving, see {@link AdminClient} for details.
  */
 public class AlterConsumerGroupOffsetsOptions extends AbstractOptions<AlterConsumerGroupOffsetsOptions> {
 }

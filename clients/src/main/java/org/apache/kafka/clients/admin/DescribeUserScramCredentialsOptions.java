@@ -21,8 +21,6 @@ import java.util.List;
 
 /**
  * Options for {@link AdminClient#describeUserScramCredentials(List, DescribeUserScramCredentialsOptions)}
- *
- * The API of this class is evolving. See {@link AdminClient} for details.
  */
 public class DescribeUserScramCredentialsOptions extends AbstractOptions<DescribeUserScramCredentialsOptions> {
 }

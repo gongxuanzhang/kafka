@@ -26,8 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * The result of the {@link AdminClient#listOffsets(Map)} call.
- *
- * The API of this class is evolving, see {@link AdminClient} for details.
  */
 public class ListOffsetsResult {
 

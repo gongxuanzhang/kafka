@@ -20,8 +20,6 @@ import java.util.Map;
 
 /**
  * Options for {@link AdminClient#updateFeatures(Map, UpdateFeaturesOptions)}.
- *
- * The API of this class is evolving. See {@link Admin} for details.
  */
 public class UpdateFeaturesOptions extends AbstractOptions<UpdateFeaturesOptions> {
     private boolean validateOnly = false;

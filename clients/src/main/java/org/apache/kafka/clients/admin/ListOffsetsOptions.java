@@ -22,8 +22,6 @@ import java.util.Map;
 
 /**
  * Options for {@link AdminClient#listOffsets(Map)}.
- *
- * The API of this class is evolving, see {@link AdminClient} for details.
  */
 public class ListOffsetsOptions extends AbstractOptions<ListOffsetsOptions> {
 

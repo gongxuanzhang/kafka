@@ -19,8 +19,6 @@ package org.apache.kafka.clients.admin;
 
 /**
  * Options for {@link Admin#unregisterBroker(int, UnregisterBrokerOptions)}.
- *
- * The API of this class is evolving. See {@link Admin} for details.
  */
 public class UnregisterBrokerOptions extends AbstractOptions<UpdateFeaturesOptions> {
 }

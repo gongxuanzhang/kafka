@@ -21,8 +21,6 @@ import java.util.Map;
 
 /**
  * Options for {@link AdminClient#alterPartitionReassignments(Map, AlterPartitionReassignmentsOptions)}
- *
- * The API of this class is evolving. See {@link AdminClient} for details.
  */
 public class AlterPartitionReassignmentsOptions extends AbstractOptions<AlterPartitionReassignmentsOptions> {
 }

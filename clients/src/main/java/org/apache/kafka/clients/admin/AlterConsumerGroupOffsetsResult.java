@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 
 /**
  * The result of the {@link AdminClient#alterConsumerGroupOffsets(String, Map)} call.
- *
- * The API of this class is evolving, see {@link AdminClient} for details.
  */
 public class AlterConsumerGroupOffsetsResult {
 

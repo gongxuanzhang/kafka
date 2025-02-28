@@ -19,8 +19,6 @@ package org.apache.kafka.clients.admin;
 
 /**
  * Options for {@link AdminClient#listPartitionReassignments(ListPartitionReassignmentsOptions)}
- *
- * The API of this class is evolving. See {@link AdminClient} for details.
  */
 public class ListPartitionReassignmentsOptions extends AbstractOptions<ListPartitionReassignmentsOptions> {
 }

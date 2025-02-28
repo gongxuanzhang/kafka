@@ -18,8 +18,6 @@ package org.apache.kafka.clients.admin;
 
 /**
  * Options for {@link AdminClient#describeFeatures(DescribeFeaturesOptions)}.
- *
- * The API of this class is evolving. See {@link Admin} for details.
  */
 public class DescribeFeaturesOptions extends AbstractOptions<DescribeFeaturesOptions> {
 }

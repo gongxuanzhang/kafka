@@ -22,8 +22,6 @@ import java.util.Set;
 
 /**
  * Options for {@link org.apache.kafka.clients.admin.Admin#electLeaders(ElectionType, Set, org.apache.kafka.clients.admin.ElectLeadersOptions)}.
- *
- * The API of this class is evolving, see {@link org.apache.kafka.clients.admin.Admin} for details.
  */
 public enum ElectionType {
     PREFERRED((byte) 0), UNCLEAN((byte) 1);

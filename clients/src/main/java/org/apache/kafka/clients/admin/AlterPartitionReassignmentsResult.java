@@ -24,8 +24,6 @@ import java.util.Map;
 
 /**
  * The result of {@link AdminClient#alterPartitionReassignments(Map, AlterPartitionReassignmentsOptions)}.
- *
- * The API of this class is evolving. See {@link AdminClient} for details.
  */
 public class AlterPartitionReassignmentsResult {
     private final Map<TopicPartition, KafkaFuture<Void>> futures;
