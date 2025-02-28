@@ -17,7 +17,6 @@
 
 package org.apache.kafka.common.resource;
 
-
 import java.util.Objects;
 
 import static org.apache.kafka.common.resource.ResourcePattern.WILDCARD_RESOURCE;

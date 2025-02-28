@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.metrics;
 
-
 import java.util.Map;
 
 /**

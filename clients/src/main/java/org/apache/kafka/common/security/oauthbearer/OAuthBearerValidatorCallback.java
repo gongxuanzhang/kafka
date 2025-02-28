@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.security.oauthbearer;
 
-
 import java.util.Objects;
 
 import javax.security.auth.callback.Callback;

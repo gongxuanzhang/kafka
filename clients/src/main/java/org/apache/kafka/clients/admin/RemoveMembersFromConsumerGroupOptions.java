@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.clients.admin;
 
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;

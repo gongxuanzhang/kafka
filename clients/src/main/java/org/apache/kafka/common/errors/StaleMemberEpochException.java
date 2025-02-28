@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.errors;
 
-
 /**
  * The StaleMemberEpochException is used in the context of the new
  * consumer group protocol (KIP-848). This error is returned in the

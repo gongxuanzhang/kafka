@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.security.oauthbearer;
 
-
 import java.util.Set;
 
 /**

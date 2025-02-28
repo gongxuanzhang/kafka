@@ -17,7 +17,6 @@
 
 package org.apache.kafka.clients.admin;
 
-
 /**
  * Options for {@link Admin#describeCluster()}.
  *

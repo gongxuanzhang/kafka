@@ -17,7 +17,6 @@
 
 package org.apache.kafka.metadata;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

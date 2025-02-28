@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.server.log.remote.storage;
 
-
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.util.Objects;

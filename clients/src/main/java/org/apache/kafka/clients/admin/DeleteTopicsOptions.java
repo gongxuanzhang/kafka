@@ -17,7 +17,6 @@
 
 package org.apache.kafka.clients.admin;
 
-
 import java.util.Collection;
 
 /**

@@ -17,7 +17,6 @@
 
 package org.apache.kafka.common.resource;
 
-
 import java.util.HashMap;
 import java.util.Locale;
 

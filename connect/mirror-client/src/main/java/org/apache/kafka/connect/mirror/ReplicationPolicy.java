@@ -17,7 +17,6 @@
 
 package org.apache.kafka.connect.mirror;
 
-
 /**
  * An interface used by the MirrorMaker connectors to manage topics names between source and target clusters.
  */

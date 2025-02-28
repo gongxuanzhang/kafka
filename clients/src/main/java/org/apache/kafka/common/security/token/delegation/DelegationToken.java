@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.common.security.token.delegation;
 
-
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;

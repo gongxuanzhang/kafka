@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.clients.admin;
 
-
 /**
  * Options for {@link AdminClient#describeFeatures(DescribeFeaturesOptions)}.
  *

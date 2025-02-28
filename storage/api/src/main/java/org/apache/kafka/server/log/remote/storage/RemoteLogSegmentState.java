@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.server.log.remote.storage;
 
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;

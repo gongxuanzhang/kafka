@@ -16,7 +16,6 @@
  */
 package org.apache.kafka.clients.admin;
 
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.OptionalInt;
