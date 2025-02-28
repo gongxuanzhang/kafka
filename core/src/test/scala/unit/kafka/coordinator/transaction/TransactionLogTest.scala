@@ -23,6 +23,7 @@ import org.apache.kafka.common.protocol.{ByteBufferAccessor, MessageUtil}
 import org.apache.kafka.common.protocol.types.Field.TaggedFieldsSection
 import org.apache.kafka.common.protocol.types.{CompactArrayOf, Field, Schema, Struct, Type}
 import org.apache.kafka.common.record.{MemoryRecords, RecordBatch, SimpleRecord}
+import org.apache.kafka.coordinator.transaction.UnknownKey
 import org.apache.kafka.coordinator.transaction.generated.{TransactionLogKey, TransactionLogValue}
 import org.apache.kafka.server.common.TransactionVersion.{TV_0, TV_2}
 import org.junit.jupiter.api.Assertions.{assertEquals, assertThrows, assertTrue}
@@ -236,6 +237,6 @@ class TransactionLogTest {
     val record = new TransactionLogKey()
     val unknownRecord = MessageUtil.toVersionPrefixedBytes(Short.MaxValue, record)
     val key = TransactionLog.readTxnRecordKey(ByteBuffer.wrap(unknownRecord))
-    assertEquals(UnknownKey(Short.MaxValue), key)
+    assertEquals(new UnknownKey(Short.MaxValue), key)
   }
 }

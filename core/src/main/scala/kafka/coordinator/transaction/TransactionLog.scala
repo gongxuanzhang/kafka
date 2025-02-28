@@ -21,6 +21,7 @@ import org.apache.kafka.common.compress.Compression
 import org.apache.kafka.common.protocol.{ByteBufferAccessor, MessageUtil}
 import org.apache.kafka.common.record.RecordBatch
 import org.apache.kafka.common.TopicPartition
+import org.apache.kafka.coordinator.transaction.{BaseKey, TxnKey, UnknownKey}
 import org.apache.kafka.coordinator.transaction.generated.{CoordinatorRecordType, TransactionLogKey, TransactionLogValue}
 import org.apache.kafka.server.common.TransactionVersion
 
@@ -96,12 +97,9 @@ object TransactionLog {
     val version = buffer.getShort
     if (version == CoordinatorRecordType.TRANSACTION_LOG.id) {
       val value = new TransactionLogKey(new ByteBufferAccessor(buffer), 0.toShort)
-      TxnKey(
-        version = version,
-        transactionalId = value.transactionalId
-      )
+      new TxnKey(version,value.transactionalId)
     } else {
-      UnknownKey(version)
+      new UnknownKey(version)
     }
   }
 
@@ -143,18 +141,3 @@ object TransactionLog {
     }
   }
 }
-
-sealed trait BaseKey{
-  def version: Short
-  def transactionalId: String
-}
-
-case class TxnKey(version: Short, transactionalId: String) extends BaseKey {
-  override def toString: String = transactionalId
-}
-
-case class UnknownKey(version: Short) extends BaseKey {
-  override def transactionalId: String = null
-  override def toString: String = transactionalId
-}
-
