@@ -26,8 +26,6 @@ import java.util.Objects;
 
 /**
  * The result of the {@link Admin#alterUserScramCredentials(List)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class AlterUserScramCredentialsResult {
     private final Map<String, KafkaFuture<Void>> futures;

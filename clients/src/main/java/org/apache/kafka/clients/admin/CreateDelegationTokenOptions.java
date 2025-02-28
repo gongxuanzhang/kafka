@@ -25,8 +25,6 @@ import java.util.Optional;
 
 /**
  * Options for {@link Admin#createDelegationToken(CreateDelegationTokenOptions)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class CreateDelegationTokenOptions extends AbstractOptions<CreateDelegationTokenOptions> {
     private long maxLifetimeMs = -1;

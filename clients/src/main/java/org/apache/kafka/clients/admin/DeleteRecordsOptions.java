@@ -21,8 +21,6 @@ import java.util.Map;
 
 /**
  * Options for {@link Admin#deleteRecords(Map, DeleteRecordsOptions)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DeleteRecordsOptions extends AbstractOptions<DeleteRecordsOptions> {
 

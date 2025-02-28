@@ -21,8 +21,6 @@ import java.util.Collection;
 
 /**
  * Options for {@link Admin#createTopics(Collection)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class CreateTopicsOptions extends AbstractOptions<CreateTopicsOptions> {
 

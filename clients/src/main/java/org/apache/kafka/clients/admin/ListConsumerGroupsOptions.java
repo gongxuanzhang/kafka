@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 
 /**
  * Options for {@link Admin#listConsumerGroups()}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListConsumerGroupsOptions extends AbstractOptions<ListConsumerGroupsOptions> {
 

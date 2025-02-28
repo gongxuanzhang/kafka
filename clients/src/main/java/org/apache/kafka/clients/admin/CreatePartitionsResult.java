@@ -23,8 +23,6 @@ import java.util.Map;
 
 /**
  * The result of the {@link Admin#createPartitions(Map)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class CreatePartitionsResult {
 

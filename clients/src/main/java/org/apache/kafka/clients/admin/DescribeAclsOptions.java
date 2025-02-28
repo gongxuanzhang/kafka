@@ -21,8 +21,6 @@ import org.apache.kafka.common.acl.AclBindingFilter;
 
 /**
  * Options for {@link Admin#describeAcls(AclBindingFilter)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeAclsOptions extends AbstractOptions<DescribeAclsOptions> {
 

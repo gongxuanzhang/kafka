@@ -22,8 +22,6 @@ import java.util.OptionalInt;
 
 /**
  * Options for {@link Admin#describeProducers(Collection)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeProducersOptions extends AbstractOptions<DescribeProducersOptions> {
     private OptionalInt brokerId = OptionalInt.empty();

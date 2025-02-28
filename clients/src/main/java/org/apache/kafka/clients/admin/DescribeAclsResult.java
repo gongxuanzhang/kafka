@@ -25,8 +25,6 @@ import java.util.Collection;
 
 /**
  * The result of the {@link KafkaAdminClient#describeAcls(AclBindingFilter)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeAclsResult {
     private final KafkaFuture<Collection<AclBinding>> future;

@@ -25,8 +25,6 @@ import java.util.Map;
 
 /**
  * The result of the {@link Admin#alterClientQuotas(Collection, AlterClientQuotasOptions)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class AlterClientQuotasResult {
 

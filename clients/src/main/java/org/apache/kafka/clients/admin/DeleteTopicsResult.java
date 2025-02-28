@@ -26,8 +26,6 @@ import java.util.Map;
 
 /**
  * The result of the {@link Admin#deleteTopics(Collection)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DeleteTopicsResult {
     private final Map<Uuid, KafkaFuture<Void>> topicIdFutures;

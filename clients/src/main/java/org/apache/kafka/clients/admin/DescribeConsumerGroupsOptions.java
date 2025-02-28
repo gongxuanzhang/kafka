@@ -22,7 +22,6 @@ import java.util.Collection;
 /**
  * Options for {@link Admin#describeConsumerGroups(Collection, DescribeConsumerGroupsOptions)}.
  * <p>
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeConsumerGroupsOptions extends AbstractOptions<DescribeConsumerGroupsOptions> {
     private boolean includeAuthorizedOperations;

@@ -24,8 +24,6 @@ import java.util.Objects;
 
 /**
  * Specification of consumer group offsets to list using {@link Admin#listConsumerGroupOffsets(java.util.Map)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListConsumerGroupOffsetsSpec {
 

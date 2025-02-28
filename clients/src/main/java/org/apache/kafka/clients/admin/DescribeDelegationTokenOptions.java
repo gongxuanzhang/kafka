@@ -23,8 +23,6 @@ import java.util.List;
 
 /**
  * Options for {@link Admin#describeDelegationToken(DescribeDelegationTokenOptions)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeDelegationTokenOptions extends AbstractOptions<DescribeDelegationTokenOptions> {
     private List<KafkaPrincipal> owners;

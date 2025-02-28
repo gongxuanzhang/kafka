@@ -32,8 +32,6 @@ import java.util.stream.Collectors;
 
 /**
  * The result of the {@link Admin#describeUserScramCredentials()} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeUserScramCredentialsResult {
     private final KafkaFuture<DescribeUserScramCredentialsResponseData> dataFuture;

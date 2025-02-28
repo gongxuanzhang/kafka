@@ -19,8 +19,6 @@ package org.apache.kafka.clients.admin;
 
 /**
  * Options for {@link Admin#expireDelegationToken(byte[], ExpireDelegationTokenOptions)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ExpireDelegationTokenOptions extends AbstractOptions<ExpireDelegationTokenOptions> {
     private long expiryTimePeriodMs = -1L;

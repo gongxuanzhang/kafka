@@ -21,8 +21,6 @@ import java.util.Collection;
 
 /**
  * Options for {@link Admin#alterClientQuotas(Collection, AlterClientQuotasOptions)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class AlterClientQuotasOptions extends AbstractOptions<AlterClientQuotasOptions> {
 

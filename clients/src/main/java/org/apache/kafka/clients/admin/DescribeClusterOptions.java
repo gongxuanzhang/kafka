@@ -19,8 +19,6 @@ package org.apache.kafka.clients.admin;
 
 /**
  * Options for {@link Admin#describeCluster()}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeClusterOptions extends AbstractOptions<DescribeClusterOptions> {
 

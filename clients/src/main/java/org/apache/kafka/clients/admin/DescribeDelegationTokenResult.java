@@ -24,8 +24,6 @@ import java.util.List;
 
 /**
  * The result of the {@link KafkaAdminClient#describeDelegationToken(DescribeDelegationTokenOptions)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeDelegationTokenResult {
     private final KafkaFuture<List<DelegationToken>> delegationTokens;

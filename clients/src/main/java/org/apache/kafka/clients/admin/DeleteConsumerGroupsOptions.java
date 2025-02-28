@@ -20,8 +20,6 @@ import java.util.Collection;
 
 /**
  * Options for the {@link Admin#deleteConsumerGroups(Collection)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DeleteConsumerGroupsOptions extends AbstractOptions<DeleteConsumerGroupsOptions> {
 

@@ -23,8 +23,6 @@ import java.util.Map;
 
 /**
  * The result of {@link Admin#abortTransaction(AbortTransactionSpec, AbortTransactionOptions)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class AbortTransactionResult {
     private final Map<TopicPartition, KafkaFuture<Void>> futures;

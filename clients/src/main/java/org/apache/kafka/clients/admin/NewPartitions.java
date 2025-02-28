@@ -22,8 +22,6 @@ import java.util.Map;
 
 /**
  * Describes new partitions for a particular topic in a call to {@link Admin#createPartitions(Map)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class NewPartitions {
 

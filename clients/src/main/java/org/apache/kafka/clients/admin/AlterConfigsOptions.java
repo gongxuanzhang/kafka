@@ -21,8 +21,6 @@ import java.util.Map;
 
 /**
  * Options for {@link Admin#incrementalAlterConfigs(Map)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class AlterConfigsOptions extends AbstractOptions<AlterConfigsOptions> {
 

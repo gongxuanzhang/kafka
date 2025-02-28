@@ -25,7 +25,6 @@ import java.util.Collection;
 /**
  * The result of the {@link Admin#listClientMetricsResources()} call.
  * <p>
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListClientMetricsResourcesResult {
     private final KafkaFuture<Collection<ClientMetricsResourceListing>> future;

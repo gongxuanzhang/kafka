@@ -25,8 +25,6 @@ import java.util.Map;
 
 /**
  * The result of the {@link Admin#createAcls(Collection)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class CreateAclsResult {
     private final Map<AclBinding, KafkaFuture<Void>> futures;

@@ -20,8 +20,6 @@ import java.util.Set;
 
 /**
  * Options for the {@link Admin#deleteConsumerGroupOffsets(String, Set)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DeleteConsumerGroupOffsetsOptions extends AbstractOptions<DeleteConsumerGroupOffsetsOptions> {
 

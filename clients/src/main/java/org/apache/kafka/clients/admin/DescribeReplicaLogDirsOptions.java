@@ -21,8 +21,6 @@ import java.util.Collection;
 
 /**
  * Options for {@link Admin#describeReplicaLogDirs(Collection)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeReplicaLogDirsOptions extends AbstractOptions<DescribeReplicaLogDirsOptions> {
 

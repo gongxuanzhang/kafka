@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
  * The result of the {@link Admin#listConsumerGroupOffsets(Map)} and
  * {@link Admin#listConsumerGroupOffsets(String)} call.
  * <p>
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListConsumerGroupOffsetsResult {
 

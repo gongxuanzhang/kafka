@@ -28,8 +28,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * The result of the {@link KafkaAdminClient#describeTopics(Collection)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeTopicsResult {
     private final Map<Uuid, KafkaFuture<TopicDescription>> topicIdFutures;

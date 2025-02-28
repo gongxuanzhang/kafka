@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 
 /**
  * The result of the {@link Admin#fenceProducers(Collection)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class FenceProducersResult {
 

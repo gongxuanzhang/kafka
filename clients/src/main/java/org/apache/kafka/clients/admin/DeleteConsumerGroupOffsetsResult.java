@@ -26,8 +26,6 @@ import java.util.Set;
 
 /**
  * The result of the {@link Admin#deleteConsumerGroupOffsets(String, Set)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DeleteConsumerGroupOffsetsResult {
     private final KafkaFuture<Map<TopicPartition, Errors>> future;

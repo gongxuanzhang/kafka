@@ -21,8 +21,6 @@ import org.apache.kafka.common.KafkaFuture;
 
 /**
  * The result of the {@link KafkaAdminClient#expireDelegationToken(byte[], ExpireDelegationTokenOptions)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class RenewDelegationTokenResult {
     private final KafkaFuture<Long> expiryTimestamp;

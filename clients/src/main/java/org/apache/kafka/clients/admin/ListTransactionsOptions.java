@@ -25,8 +25,6 @@ import java.util.Set;
 
 /**
  * Options for {@link Admin#listTransactions()}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListTransactionsOptions extends AbstractOptions<ListTransactionsOptions> {
     private Set<TransactionState> filteredStates = Collections.emptySet();

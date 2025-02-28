@@ -20,8 +20,6 @@ import java.util.Collection;
 
 /**
  * Options for {@link Admin#describeTransactions(Collection)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeTransactionsOptions extends AbstractOptions<DescribeTransactionsOptions> {
 

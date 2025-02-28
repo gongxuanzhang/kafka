@@ -26,8 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * The result of the {@link KafkaAdminClient#describeConsumerGroups(Collection, DescribeConsumerGroupsOptions)}} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeConsumerGroupsResult {
 

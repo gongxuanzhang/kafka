@@ -312,7 +312,6 @@ import static org.apache.kafka.common.utils.Utils.closeQuietly;
  * <p>
  * This class is thread-safe.
  * </p>
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class KafkaAdminClient extends AdminClient {
 

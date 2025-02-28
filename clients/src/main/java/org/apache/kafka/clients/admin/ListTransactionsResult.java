@@ -30,7 +30,6 @@ import java.util.Set;
 /**
  * The result of the {@link Admin#listTransactions()} call.
  * <p>
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListTransactionsResult {
     private final KafkaFuture<Map<Integer, KafkaFutureImpl<Collection<TransactionListing>>>> future;

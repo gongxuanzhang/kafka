@@ -21,8 +21,6 @@ import java.util.Collection;
 
 /**
  * Options for {@link Admin#describeTopics(Collection)}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeTopicsOptions extends AbstractOptions<DescribeTopicsOptions> {
 

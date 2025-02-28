@@ -26,8 +26,6 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * The result of the {@link Admin#describeLogDirs(Collection)} call.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class DescribeLogDirsResult {
     private final Map<Integer, KafkaFuture<Map<String, LogDirDescription>>> futures;

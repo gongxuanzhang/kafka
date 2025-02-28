@@ -21,8 +21,6 @@ import java.util.Objects;
 
 /**
  * Options for {@link Admin#listTopics()}.
- *
- * The API of this class is evolving, see {@link Admin} for details.
  */
 public class ListTopicsOptions extends AbstractOptions<ListTopicsOptions> {
 
