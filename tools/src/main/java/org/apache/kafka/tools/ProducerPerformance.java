@@ -85,7 +85,8 @@ public class ProducerPerformance {
             long transactionStartTime = 0;
             for (long i = 0; i < config.numRecords; i++) {
 
-                payload = generateRandomPayload(config.recordSize, config.payloadByteList, payload, random, config.payloadMonotonic, i);
+                payload = generateRandomPayload(config.recordSize, config.payloadByteList, payload, random,
+                    config.payloadMonotonic, i, config.offset);
 
                 if (config.transactionsEnabled && currentTransactionSize == 0) {
                     producer.beginTransaction();
@@ -117,15 +118,20 @@ public class ProducerPerformance {
 
                 /* print final results */
                 stats.printTotal();
+                if (config.payloadMonotonic) {
+                    String message = String.format("send %d records to %s range [%d - %d]", config.numRecords,
+                        config.topicName, config.offset, config.numRecords + config.offset);
+                    System.out.println(message);
+                }
             } else {
                 // Make sure all messages are sent before printing out the stats and the metrics
-                // We need to do this in a different branch for now since tests/kafkatest/sanity_checks/test_performance_services.py
+                // We need to do this in a different branch for now since 
+                // tests/kafkatest/sanity_checks/test_performance_services.py
                 // expects this class to work with older versions of the client jar that don't support flush().
                 producer.flush();
 
                 /* print final results */
                 stats.printTotal();
-
                 /* print out metrics */
                 ToolsUtils.printMetrics(producer.metrics());
                 producer.close();
@@ -151,20 +157,27 @@ public class ProducerPerformance {
     Stats stats;
 
     static byte[] generateRandomPayload(Integer recordSize, List<byte[]> payloadByteList, byte[] payload,
-            SplittableRandom random, boolean payloadMonotonic, long recordValue) {
+                                        SplittableRandom random, boolean payloadMonotonic, long recordValue) {
+        return generateRandomPayload(recordSize, payloadByteList, payload, random, payloadMonotonic, recordValue, 0);
+    }
+
+    static byte[] generateRandomPayload(Integer recordSize, List<byte[]> payloadByteList, byte[] payload,
+                                        SplittableRandom random, boolean payloadMonotonic, long recordValue,
+                                        long offset) {
         if (!payloadByteList.isEmpty()) {
             payload = payloadByteList.get(random.nextInt(payloadByteList.size()));
         } else if (recordSize != null) {
             for (int j = 0; j < payload.length; ++j)
                 payload[j] = (byte) (random.nextInt(26) + 65);
         } else if (payloadMonotonic) {
-            payload = Long.toString(recordValue).getBytes(StandardCharsets.UTF_8);
+            payload = Long.toString(recordValue + offset).getBytes(StandardCharsets.UTF_8);
         } else {
-            throw new IllegalArgumentException("no payload File Path or record Size or payload-monotonic option provided");
+            throw new IllegalArgumentException("no payload File Path or record Size or payload-monotonic option " +
+                "provided");
         }
         return payload;
     }
-    
+
     static Properties readProps(List<String> producerProps, String producerConfig) throws IOException {
         Properties props = new Properties();
         if (producerConfig != null) {
@@ -178,8 +191,10 @@ public class ProducerPerformance {
                 props.put(pieces[0], pieces[1]);
             }
 
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer");
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization" +
+            ".ByteArraySerializer");
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization" +
+            ".ByteArraySerializer");
         if (props.getProperty(ProducerConfig.CLIENT_ID_CONFIG) == null) {
             props.put(ProducerConfig.CLIENT_ID_CONFIG, "perf-producer-client");
         }
@@ -191,7 +206,7 @@ public class ProducerPerformance {
         if (payloadFilePath != null) {
             Path path = Paths.get(payloadFilePath);
             System.out.println("Reading payloads from: " + path.toAbsolutePath());
-            if (Files.notExists(path) || Files.size(path) == 0)  {
+            if (Files.notExists(path) || Files.size(path) == 0) {
                 throw new IllegalArgumentException("File does not exist or empty file provided.");
             }
 
@@ -210,126 +225,140 @@ public class ProducerPerformance {
         return payloadByteList;
     }
 
-    /** Get the command-line argument parser. */
+    /**
+     * Get the command-line argument parser.
+     */
     static ArgumentParser argParser() {
         ArgumentParser parser = ArgumentParsers
-                .newArgumentParser("producer-performance")
-                .defaultHelp(true)
-                .description("This tool is used to verify the producer performance. To enable transactions, " +
-                        "you can specify a transaction id or set a transaction duration using --transaction-duration-ms. " +
-                        "There are three ways to specify the transaction id: set transaction.id=<id> via --producer-props, " +
-                        "set transaction.id=<id> in the config file via --producer.config, or use --transaction-id <id>.");
+            .newArgumentParser("producer-performance")
+            .defaultHelp(true)
+            .description("This tool is used to verify the producer performance. To enable transactions, " +
+                "you can specify a transaction id or set a transaction duration using --transaction-duration-ms. " +
+                "There are three ways to specify the transaction id: set transaction.id=<id> via --producer-props, " +
+                "set transaction.id=<id> in the config file via --producer.config, or use --transaction-id <id>.");
 
         MutuallyExclusiveGroup payloadOptions = parser
-                .addMutuallyExclusiveGroup()
-                .required(true)
-                .description("either --record-size or --payload-file must be specified but not both.");
+            .addMutuallyExclusiveGroup()
+            .required(true)
+            .description("either --record-size or --payload-file must be specified but not both.");
 
         parser.addArgument("--topic")
-                .action(store())
-                .required(true)
-                .type(String.class)
-                .metavar("TOPIC")
-                .help("produce messages to this topic");
+            .action(store())
+            .required(true)
+            .type(String.class)
+            .metavar("TOPIC")
+            .help("produce messages to this topic");
 
         parser.addArgument("--num-records")
-                .action(store())
-                .required(true)
-                .type(Long.class)
-                .metavar("NUM-RECORDS")
-                .dest("numRecords")
-                .help("number of messages to produce");
+            .action(store())
+            .required(true)
+            .type(Long.class)
+            .metavar("NUM-RECORDS")
+            .dest("numRecords")
+            .help("number of messages to produce");
 
         payloadOptions.addArgument("--record-size")
-                .action(store())
-                .required(false)
-                .type(Integer.class)
-                .metavar("RECORD-SIZE")
-                .dest("recordSize")
-                .help("message size in bytes. Note that you must provide exactly one of --record-size or --payload-file " +
-                        "or --payload-monotonic.");
+            .action(store())
+            .required(false)
+            .type(Integer.class)
+            .metavar("RECORD-SIZE")
+            .dest("recordSize")
+            .help("message size in bytes. Note that you must provide exactly one of --record-size or --payload-file " +
+                "or --payload-monotonic.");
 
         payloadOptions.addArgument("--payload-file")
-                .action(store())
-                .required(false)
-                .type(String.class)
-                .metavar("PAYLOAD-FILE")
-                .dest("payloadFile")
-                .help("file to read the message payloads from. This works only for UTF-8 encoded text files. " +
-                        "Payloads will be read from this file and a payload will be randomly selected when sending messages. " +
-                        "Note that you must provide exactly one of --record-size or --payload-file or --payload-monotonic.");
+            .action(store())
+            .required(false)
+            .type(String.class)
+            .metavar("PAYLOAD-FILE")
+            .dest("payloadFile")
+            .help("file to read the message payloads from. This works only for UTF-8 encoded text files. " +
+                "Payloads will be read from this file and a payload will be randomly selected when sending messages. " +
+                "Note that you must provide exactly one of --record-size or --payload-file or --payload-monotonic.");
 
         payloadOptions.addArgument("--payload-monotonic")
-                .action(storeTrue())
-                .type(Boolean.class)
-                .metavar("PAYLOAD-MONOTONIC")
-                .dest("payloadMonotonic")
-                .help("payload is monotonically increasing integer. Note that you must provide exactly one of --record-size " +
-                        "or --payload-file or --payload-monotonic.");
+            .action(storeTrue())
+            .type(Boolean.class)
+            .metavar("PAYLOAD-MONOTONIC")
+            .dest("payloadMonotonic")
+            .help("payload is monotonically increasing integer. Note that you must provide exactly one of " +
+                "--record-size " +
+                "or --payload-file or --payload-monotonic.");
+
+        parser.addArgument("--offset")
+            .action(store())
+            .required(false)
+            .type(Long.class)
+            .dest("offset")
+            .metavar("OFFSET")
+            .setDefault(0L)
+            .help("payloadMonotonic number add offset value");
 
         parser.addArgument("--payload-delimiter")
-                .action(store())
-                .required(false)
-                .type(String.class)
-                .metavar("PAYLOAD-DELIMITER")
-                .dest("payloadDelimiter")
-                .setDefault("\\n")
-                .help("provides delimiter to be used when --payload-file is provided. " +
-                        "Defaults to new line. " +
-                        "Note that this parameter will be ignored if --payload-file is not provided.");
+            .action(store())
+            .required(false)
+            .type(String.class)
+            .metavar("PAYLOAD-DELIMITER")
+            .dest("payloadDelimiter")
+            .setDefault("\\n")
+            .help("provides delimiter to be used when --payload-file is provided. " +
+                "Defaults to new line. " +
+                "Note that this parameter will be ignored if --payload-file is not provided.");
 
         parser.addArgument("--throughput")
-                .action(store())
-                .required(true)
-                .type(Double.class)
-                .metavar("THROUGHPUT")
-                .help("throttle maximum message throughput to *approximately* THROUGHPUT messages/sec. Set this to -1 to disable throttling.");
+            .action(store())
+            .required(true)
+            .type(Double.class)
+            .metavar("THROUGHPUT")
+            .help("throttle maximum message throughput to *approximately* THROUGHPUT messages/sec. Set this to -1 to " +
+                "disable throttling.");
 
         parser.addArgument("--producer-props")
-                 .nargs("+")
-                 .required(false)
-                 .metavar("PROP-NAME=PROP-VALUE")
-                 .type(String.class)
-                 .dest("producerConfig")
-                 .help("kafka producer related configuration properties like bootstrap.servers,client.id etc. " +
-                         "These configs take precedence over those passed via --producer.config.");
+            .nargs("+")
+            .required(false)
+            .metavar("PROP-NAME=PROP-VALUE")
+            .type(String.class)
+            .dest("producerConfig")
+            .help("kafka producer related configuration properties like bootstrap.servers,client.id etc. " +
+                "These configs take precedence over those passed via --producer.config.");
 
         parser.addArgument("--producer.config")
-                .action(store())
-                .required(false)
-                .type(String.class)
-                .metavar("CONFIG-FILE")
-                .dest("producerConfigFile")
-                .help("producer config properties file.");
+            .action(store())
+            .required(false)
+            .type(String.class)
+            .metavar("CONFIG-FILE")
+            .dest("producerConfigFile")
+            .help("producer config properties file.");
 
         parser.addArgument("--print-metrics")
-                .action(storeTrue())
-                .type(Boolean.class)
-                .metavar("PRINT-METRICS")
-                .dest("printMetrics")
-                .help("print out metrics at the end of the test.");
+            .action(storeTrue())
+            .type(Boolean.class)
+            .metavar("PRINT-METRICS")
+            .dest("printMetrics")
+            .help("print out metrics at the end of the test.");
 
         parser.addArgument("--transactional-id")
-               .action(store())
-               .required(false)
-               .type(String.class)
-               .metavar("TRANSACTIONAL-ID")
-               .dest("transactionalId")
-               .help("The transactional id to use. This config takes precedence over the transactional.id " +
-                       "specified via --producer.config or --producer-props. Note that if the transactional id " +
-                       "is not specified while --transaction-duration-ms is provided, the default value for the " +
-                       "transactional id will be performance-producer- followed by a random uuid.");
+            .action(store())
+            .required(false)
+            .type(String.class)
+            .metavar("TRANSACTIONAL-ID")
+            .dest("transactionalId")
+            .help("The transactional id to use. This config takes precedence over the transactional.id " +
+                "specified via --producer.config or --producer-props. Note that if the transactional id " +
+                "is not specified while --transaction-duration-ms is provided, the default value for the " +
+                "transactional id will be performance-producer- followed by a random uuid.");
 
         parser.addArgument("--transaction-duration-ms")
-               .action(store())
-               .required(false)
-               .type(Long.class)
-               .metavar("TRANSACTION-DURATION")
-               .dest("transactionDurationMs")
-               .help("The max age of each transaction. The commitTransaction will be called after this time has elapsed. " +
-                       "The value should be greater than 0. If the transactional id is specified via --producer-props, " +
-                       "--producer.config, or --transactional-id but --transaction-duration-ms is not specified, " +
-                       "the default value will be 3000.");
+            .action(store())
+            .required(false)
+            .type(Long.class)
+            .metavar("TRANSACTION-DURATION")
+            .dest("transactionDurationMs")
+            .help("The max age of each transaction. The commitTransaction will be called after this time has elapsed." +
+                " " +
+                "The value should be greater than 0. If the transactional id is specified via --producer-props, " +
+                "--producer.config, or --transactional-id but --transaction-duration-ms is not specified, " +
+                "the default value will be 3000.");
 
         return parser;
     }
@@ -412,12 +441,13 @@ public class ProducerPerformance {
             long elapsed = System.currentTimeMillis() - windowStart;
             double recsPerSec = 1000.0 * windowCount / (double) elapsed;
             double mbPerSec = 1000.0 * this.windowBytes / (double) elapsed / (1024.0 * 1024.0);
-            System.out.printf("%d records sent, %.1f records/sec (%.2f MB/sec), %.1f ms avg latency, %.1f ms max latency.%n",
-                              windowCount,
-                              recsPerSec,
-                              mbPerSec,
-                              windowTotalLatency / (double) windowCount,
-                              (double) windowMaxLatency);
+            System.out.printf("%d records sent, %.1f records/sec (%.2f MB/sec), %.1f ms avg latency, %.1f ms max " +
+                    "latency.%n",
+                windowCount,
+                recsPerSec,
+                mbPerSec,
+                windowTotalLatency / (double) windowCount,
+                (double) windowMaxLatency);
         }
 
         public void newWindow() {
@@ -433,16 +463,17 @@ public class ProducerPerformance {
             double recsPerSec = 1000.0 * count / (double) elapsed;
             double mbPerSec = 1000.0 * this.bytes / (double) elapsed / (1024.0 * 1024.0);
             int[] percs = percentiles(this.latencies, index, 0.5, 0.95, 0.99, 0.999);
-            System.out.printf("%d records sent, %.1f records/sec (%.2f MB/sec), %.2f ms avg latency, %.2f ms max latency, %d ms 50th, %d ms 95th, %d ms 99th, %d ms 99.9th.%n",
-                              count,
-                              recsPerSec,
-                              mbPerSec,
-                              totalLatency / (double) count,
-                              (double) maxLatency,
-                              percs[0],
-                              percs[1],
-                              percs[2],
-                              percs[3]);
+            System.out.printf("%d records sent, %.1f records/sec (%.2f MB/sec), %.2f ms avg latency, %.2f ms max " +
+                    "latency, %d ms 50th, %d ms 95th, %d ms 99th, %d ms 99.9th.%n",
+                count,
+                recsPerSec,
+                mbPerSec,
+                totalLatency / (double) count,
+                (double) maxLatency,
+                percs[0],
+                percs[1],
+                percs[2],
+                percs[3]);
         }
 
         private static int[] percentiles(int[] latencies, int count, double... percentiles) {
@@ -493,6 +524,7 @@ public class ProducerPerformance {
         final Long transactionDurationMs;
         final boolean transactionsEnabled;
         final List<byte[]> payloadByteList;
+        final Long offset;
 
         public ConfigPostProcessor(ArgumentParser parser, String[] args) throws IOException, ArgumentParserException {
             Namespace namespace = parser.parseArgs(args);
@@ -502,6 +534,7 @@ public class ProducerPerformance {
             this.throughput = namespace.getDouble("throughput");
             this.payloadMonotonic = namespace.getBoolean("payloadMonotonic");
             this.shouldPrintMetrics = namespace.getBoolean("printMetrics");
+            this.offset = namespace.getLong("offset");
 
             List<String> producerConfigs = namespace.getList("producerConfig");
             String producerConfigFile = namespace.getString("producerConfigFile");
@@ -515,26 +548,29 @@ public class ProducerPerformance {
                 throw new ArgumentParserException("--record-size should be greater than zero", parser);
             }
             if (producerConfigs == null && producerConfigFile == null) {
-                throw new ArgumentParserException("Either --producer-props or --producer.config must be specified.", parser);
+                throw new ArgumentParserException("Either --producer-props or --producer.config must be specified.",
+                    parser);
             }
             if (transactionDurationMsArg != null && transactionDurationMsArg <= 0) {
                 throw new ArgumentParserException("--transaction-duration-ms should be greater than zero", parser);
             }
 
-            // since default value gets printed with the help text, we are escaping \n there and replacing it with correct value here.
+            // since default value gets printed with the help text, we are escaping \n there and replacing it with 
+            // correct value here.
             String payloadDelimiter = namespace.getString("payloadDelimiter").equals("\\n")
-                    ? "\n" : namespace.getString("payloadDelimiter");
+                ? "\n" : namespace.getString("payloadDelimiter");
             this.payloadByteList = readPayloadFile(payloadFilePath, payloadDelimiter);
             this.producerProps = readProps(producerConfigs, producerConfigFile);
             // setup transaction related configs
             this.transactionsEnabled = transactionDurationMsArg != null
-                    || transactionIdArg != null
-                    || producerProps.containsKey(ProducerConfig.TRANSACTIONAL_ID_CONFIG);
+                || transactionIdArg != null
+                || producerProps.containsKey(ProducerConfig.TRANSACTIONAL_ID_CONFIG);
             if (transactionsEnabled) {
                 Optional<String> txIdInProps =
-                        Optional.ofNullable(producerProps.get(ProducerConfig.TRANSACTIONAL_ID_CONFIG))
-                                .map(Object::toString);
-                String transactionId = Optional.ofNullable(transactionIdArg).orElse(txIdInProps.orElse(DEFAULT_TRANSACTION_ID_PREFIX + Uuid.randomUuid().toString()));
+                    Optional.ofNullable(producerProps.get(ProducerConfig.TRANSACTIONAL_ID_CONFIG))
+                        .map(Object::toString);
+                String transactionId =
+                    Optional.ofNullable(transactionIdArg).orElse(txIdInProps.orElse(DEFAULT_TRANSACTION_ID_PREFIX + Uuid.randomUuid().toString()));
                 producerProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, transactionId);
 
                 if (transactionDurationMsArg == null) {
